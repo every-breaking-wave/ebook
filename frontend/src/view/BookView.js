@@ -56,5 +56,5 @@ class BookView extends React.Component{
     }
 }
 
-export default withRouter(BookView);
+export default BookView;
 

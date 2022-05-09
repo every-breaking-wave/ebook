@@ -1,6 +1,6 @@
-package com.wave.backend.Constant;
+package com.wave.backend.constant;
 
-public interface userConstant {
+public interface UserConstant {
     /**
      *  用户登录态键
      */

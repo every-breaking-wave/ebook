@@ -1,6 +1,8 @@
 package com.wave.backend.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wave.backend.model.domain.User;
+import com.wave.backend.model.domain.response.UserLoginResponse;
+import com.wave.backend.model.domain.response.UserRegisterResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,17 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 * @description 针对表【user(用户表)】的数据库操作Service
 * @createDate 2022-04-12 22:46:44
 */
-public interface userService extends IService<User> {
+
+
+public interface UserService extends IService<User> {
 
     /**
      *
      * @param userAccount:用户账号
      * @param userPassword：用户密码
-     * @param checkPassword：确认密码
      * @return 生成的用户ID
      */
-    long userRegister(String userAccount, String userPassword, String checkPassword);
-    User userLogin(String userAccount, String userPassword, HttpServletRequest request);
+    UserRegisterResponse userRegister(String userAccount, String userPassword);
+    UserLoginResponse userLogin(String userAccount, String userPassword, HttpServletRequest request);
 
     /**
      *

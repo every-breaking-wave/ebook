@@ -22,10 +22,11 @@ export default class Book extends React.Component{
                     hoverable           
                     style={{width: 181}}
                     // cover={<img alt="image" src={require("../assets/list/list_img1.jpg")} className={"bookImg"}/>}?
-                    cover={<img alt="image"  src={`/assets/list/${info.src}`} className={"bookImg"}/>}
+                    cover={<img alt="image"  src={info.cover} className={"bookImg"}/>}
                     // onClick={this.showBookDetails.bind(this, info.bookId)}
                 >
-                    <Meta title={info.name} description={info.price}/>
+                     <Meta title={info.bookName} author={info.author} description={info.price} style={{marginLeft : 30}}/>
+                    {info.author}   
                 </Card>
             </Link>
         );

@@ -1,7 +1,8 @@
-package com.wave.backend.Mapper;
+package com.wave.backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wave.backend.model.domain.User;
+
 
 public interface UserMapper extends BaseMapper<User> {
 
