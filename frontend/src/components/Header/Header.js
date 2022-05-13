@@ -2,10 +2,12 @@
 import React from "react";
 import '../../css/header.css'
 import '../../css/base.css'
-// import Search from "./Search";
 import LeftNav from "../leftNav";
 import {listBrand} from "../Brand";
-const PinyinMatch = require('pinyin-match');
+import {logout} from "../../services/userService";
+import axios from "axios";
+import {message} from "antd";
+
 
 class HeaderL extends React.Component{
 
@@ -22,39 +24,21 @@ class HeaderL extends React.Component{
        this.setState({list:arr});
     };
 
+    handleOnclick(){
+        axios.post(`/api/car/cartList`, {
+        }).then(
+            response => {
+                console.log("请求成功", response.data);
+                message.info("购物车添加成功")
+                // let { history } = this.props
+                // onLogin(response.data.userAccount)
+                // history.push({ pathname: '/car' })
 
-    // onSearch(vals){
-    //     // let vals = val.trim().split(/\s+/g)
-    //     let newlist = this.state.list;
-    //     // if(vals.length === 1 && vals[0] === ""){
-    //     //     // 说明是空格或者空字符串
-    //     //     list = initState.list
-    //     // }
-    //         (vals || []).forEach(el => {
-    //         // if(Number.isNaN(+el)){
-    //         //     // 说明是字符串
-    //         //     let reg = new RegExp(el, "g");
-    //         //     // console.log(reg)
-    //         //     // 一旦是字符串就根据商品的名称筛选
-    //         //     newlist = newlist.filter(element => reg.test(element.name));
-    //         // }else{
-    //         //     // 说明是数字
-    //         //     // 一旦是数字就根据商品的价格筛选
-    //         //     let p = +el;
-    //         //     newlist = newlist.filter(element => element.price >= p);
-    //         // }
-    //
-    //     });
-    //     this.setState({ list:newlist });
-    //     console.log(vals);
-    // }
-
-    // search(){
-    //     this.setState({keyValue:this.keyWordElement.value});
-    //     console.log(this.keyWordElement.value);
-    //     this.onSearch(this.keyWordElement.value);
-    //     this.props.getSearchList(this.state.list);
-    // }
+                // else message.error("登录失败：用户不存在或密码错误")
+            },
+            error => { console.log("请求失败", error); }
+        )
+    }
 
     render() {
 
@@ -87,7 +71,7 @@ class HeaderL extends React.Component{
 				<a href="#">阅读计划</a>
 			</span>
 			<span>
-				<a href="#">帮助中心</a>
+				<a  onClick={logout} href="#">退出登录</a>
 			</span>
 		</span>
                 </div>
@@ -126,9 +110,9 @@ class HeaderL extends React.Component{
 
                     <div className="searchIContentBag r">
                         <div className="searchIContentBag01 r">
-                            <a href="/car">
+                            <a href="/car" onClick={this.handleOnclick.bind(this)}>
                                 <em className="bagIcon"></em>
-                                购物车<span className="num">3</span>件
+                                购物车<span className="num"></span>
                             </a>
                         </div>
                         <div className="searchIContentBag02 r">

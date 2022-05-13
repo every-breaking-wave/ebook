@@ -1,24 +1,29 @@
 import React, {Component} from 'react';
 import BookInCar from "./BookInCar";
+import cookie from "react-cookies";
+import { useCookies } from 'react-cookie';
 import {listBrand} from "../Brand";
+import {getBook} from "../../services/bookService";
+import axios from "axios";
+import {message} from "antd";
+import {getCar} from "../../services/shoppingCarService";
 
 class CarList extends Component {
     constructor(props) {
         super(props);
         this.state = {sum:0}
-        this.state = {list:[listBrand[this.props.bookId - 1]]}
-        console.log(this.props.bookId)
+        this.state = {bookList:[]}
+        // console.log(this.props.bookId)
         console.log(this.state.list)
     }
-    getNum = (bookNum) =>{
-        //获取新的priceSum
-        //更新priceSum
-        console.log("refresh")
-        this.props.getNum(bookNum)
+
+    callback=(bookInCarList)=>{
+        this.setState({bookList:bookInCarList})
+        console.log(this.state.bookList)
     }
-    removeBook = (list)=>{
-        this.setState({list:[]})
-        console.log(this.state.list)
+
+    componentDidMount(){
+       getCar(this.callback)
     }
 
     // getAllPrice() {
@@ -28,13 +33,17 @@ class CarList extends Component {
     //     this.setState({sum:newSum})
     // }
     render() {
-        const id = this.props.bookId;
+        // this.componentDidMount()
+        const bookList = this.state.bookList || []
+        // const bookList = cookie.loadAll().list;
+        console.log(this.props)
+        console.log(bookList)
         return (
             <div>
                 {
-                    this.state.list.map((item,index)=>
+                    bookList.map((item,index)=>
                         <div>
-                            <BookInCar info={item} getNum={this.getNum} removeBook={this.removeBook}/>
+                            <BookInCar key={item+index} info={item}/>
                         </div>
                     )
                 }

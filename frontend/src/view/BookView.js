@@ -8,6 +8,7 @@ import HeaderL from "../components/Header/Header";
 import Footer from "../components/Footer";
 import BookDetail from "../components/BookDetail/BookDetail";
 import {listBrand} from "../components/Brand";
+import {getBook} from "../services/bookService";
 
 const { Content } = Layout;
 
@@ -15,17 +16,25 @@ class BookView extends React.Component{
 
     constructor(props) {
         super(props);
-         this.state = {idNum : 1};
+         this.state = {book:null};
          this.componentDidMount = this.componentDidMount.bind(this)
     }
 
     componentDidMount(){
-        let user = localStorage.getItem("user");
-        this.setState({user:user});
-        const query = this.props.location.search;
-        const arr = query.split('&');
-        const bookId = arr[0].substr(4);
-        this.setState({idNum:Number(bookId)});
+        // let user = localStorage.getItem("user");
+        // this.setState({user:user});
+        // const query = this.props.location.search;
+        // const arr = query.split('&');
+        // const bookId = arr[0].substr(4);
+        // this.setState({idNum:Number(bookId)});
+
+        const callback = (book) => {
+            this.setState({book: book});
+            console.log(this.state)
+        };
+
+        console.log(this.props)
+        getBook(this.props.match.params.id, callback);
     }
 
     searchBooks = (bookName)=>{
@@ -33,7 +42,7 @@ class BookView extends React.Component{
     }
 
     render(){
-        const bookId = this.state.idNum;
+        const {book} = this.state;
         return(
            <div style={{background:"white"}}>
                <Layout className="layout">
@@ -43,7 +52,7 @@ class BookView extends React.Component{
                    <Layout>
                        <Content style={{ padding: '0 50px' }}>
                            <div className="home-content">
-                               <BookDetail info={listBrand[bookId - 1]} />
+                               <BookDetail info={book}/>
                                <div className={"foot-wrapper"}>
                                </div>
                            </div>

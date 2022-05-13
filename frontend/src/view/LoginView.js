@@ -1,15 +1,18 @@
 import React from 'react';
 import { Input, Form, Button, message } from 'antd';
 import WrappedLoginForm from '../components/LoginForm';
-import { withRouter, Link, useNavigate } from "react-router-dom";
+ import { withRouter, Link, useNavigate } from "react-router-dom";
 import { history } from '../utils/history';
+import cookie from "react-cookies";
 import '../css/login.css'
 import '../css/base.css'
 import axios from 'axios';
+import '../services/userService'
 
 
 // import { Input, Space } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import {onLogin} from "../services/userService";
 
 
 class LoginView extends React.Component {
@@ -44,15 +47,7 @@ class LoginView extends React.Component {
         const userPassword = this.state.userPassword
         console.log(userAccount)
         console.log(userPassword)
-        // console.log(value)
-        // axios.get(`http://api.github.com/search/users?q=${value}`).then(
-        //     response => {console.log("chenggong", response.data);},
-        //     error => {console.log("shibai", error);}
-        // )
-        // axios.get("/api/user/login").then(
-        //     response => {console.log("chenggong", response.data);},
-        //     error => {console.log("shibai", error);}
-        // )
+
         axios.post(`/api/user/login`, {
             userAccount: userAccount,
             userPassword: userPassword
@@ -62,6 +57,7 @@ class LoginView extends React.Component {
                 if (response.data.status == 'USER_ALL_OK') {
                     message.info("登陆成功，祝您购物愉快")
                     let { history } = this.props
+                    onLogin(response.data.userAccount)
                     history.push({ pathname: '/' })
                 }
                 else message.error("登录失败：用户不存在或密码错误")
@@ -69,7 +65,6 @@ class LoginView extends React.Component {
             error => { console.log("请求失败", error); }
         )
     }
-
 
 
     render() {

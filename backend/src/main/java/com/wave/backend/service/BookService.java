@@ -2,9 +2,10 @@ package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wave.backend.model.domain.Book;
+import com.wave.backend.model.domain.response.GetBookResponse;
 import com.wave.backend.model.domain.response.SearchBookResponse;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
 * @author Feng
@@ -14,4 +15,8 @@ import java.util.List;
 public interface BookService extends IService<Book> {
 
     SearchBookResponse searchBook(String searchKey);
+
+    GetBookResponse getBook(String id);
+
+    GetBookResponse getBooks(String id, HttpServletRequest request);
 }

@@ -11,4 +11,6 @@ public interface UserConstant {
      */
     int DEFAULT_ROLE = 0;
     int ADMIN_ROLE = 1;
+
+    int NOT_LOGIN = 3;
 }

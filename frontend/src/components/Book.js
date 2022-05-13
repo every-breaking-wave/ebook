@@ -1,33 +1,52 @@
 import React from 'react';
-import { Card } from 'antd';
-import {Link} from 'react-router-dom'
+import {Card, message} from 'antd';
+import { Link } from 'react-router-dom'
+import axios from "axios";
 // import '../css/list.css'
 // import '../css/base.css'
 const { Meta } = Card;
 
-export default class Book extends React.Component{
+export default class Book extends React.Component {
 
 
     render() {
 
-        const {info} = this.props;
+        const { info } = this.props;
+
+        const gridStyle = {
+            width: '100%',
+            textAlign: 'center',
+        };
 
         return (
-            <Link to={{
-                pathname: '/book',
-                search: '?id=' + info.id}}
-                  target="_blank"
-            >
+            <Link to={`/book/${info.id}`}>
+
                 <Card
-                    hoverable           
-                    style={{width: 181}}
-                    // cover={<img alt="image" src={require("../assets/list/list_img1.jpg")} className={"bookImg"}/>}?
-                    cover={<img alt="image"  src={info.cover} className={"bookImg"}/>}
-                    // onClick={this.showBookDetails.bind(this, info.bookId)}
+                    hoverable
+                    style={{ width: 181, height: 250 }}
+                    cover={
+                        <img
+                             className={"bookImg"}
+                            src={info.cover}
+                            style={{ width: 100, marginLeft: 40, height: 100 }}
+                        />
+                    }
+                    // onClick={handleBookClick}
                 >
-                     <Meta title={info.bookName} author={info.author} description={info.price} style={{marginLeft : 30}}/>
-                    {info.author}   
+                    <Meta
+                        title= {info.bookName}
+                        description={info.bookDescription}
+                        style={gridStyle}
+                    />
+                    <p
+                        style={gridStyle}
+                    >
+                        作者:{info.author}
+                    </p>
+                    <p style={gridStyle} >价格：{info.price}元</p>
                 </Card>
+
+
             </Link>
         );
 

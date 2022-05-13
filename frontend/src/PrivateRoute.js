@@ -2,6 +2,8 @@ import React from 'react';
 import {Route, Redirect} from 'react-router-dom'
 import * as userService from "./services/userService"
 import {message} from "antd";
+import './services/userService'
+import {loginUser} from "./services/userService";
 
 export default class PrivateRoute extends React.Component{
     constructor(props) {
@@ -25,30 +27,36 @@ export default class PrivateRoute extends React.Component{
 
 
     componentDidMount() {
-        userService.checkSession(this.checkAuth);
+        if(!loginUser())
+            message.info("你需要先进行登录")
+        // userService.checkSession(this.checkAuth);
     }
 
 
     render() {
 
+
+
         const {component: Component, path="/",exact=false,strict=false} = this.props;
 
-        console.log(this.state.isAuthed);
-
-        if (!this.state.hasAuthed) {
-            return null;
-        }
+        // console.log(this.state.isAuthed);
+        //
+        // if (!this.state.hasAuthed) {
+        //     return null;
+        // }
 
         return <Route path={path} exact={exact} strict={strict} render={props => (
-            this.state.isAuthed ? (
+           loginUser() ? (
                 <Component {...props}/>
             ) : (
                 <Redirect to={{
                     pathname: '/login',
-                    state: {from: props.location}
+                    state: {from: props.location},
+                    message
                 }}/>
             )
         )}/>
+
     }
 }
 

@@ -40,7 +40,6 @@ public class UserController {
         }
 
 
-
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();
         String checkPassword = userRegisterRequest.getCheckPassword();
@@ -89,7 +88,14 @@ public class UserController {
         return userService.removeById(id);
     }
 
-    private boolean isAdmin(HttpServletRequest request){
+    @PostMapping ("/check")
+    public boolean checkAuth(HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(UserConstant.USER_LOGIN_STATE);
+        User user = (User) userObj;
+        return user != null;
+    }
+
+    public boolean isAdmin(HttpServletRequest request){
         Object userObj = request.getSession().getAttribute(UserConstant.USER_LOGIN_STATE);
         User user = (User) userObj;
         return user != null && user.getUserRole() == ADMIN_ROLE; // 返回空数组

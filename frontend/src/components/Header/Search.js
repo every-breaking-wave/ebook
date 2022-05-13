@@ -18,21 +18,23 @@ class Search extends Component {
 
     handleSearch(){
         const keyword = this.keyWordElement.value
+        console.log("keyword is " + keyword)
         Pubsub.publish('searchBook',{isFirst:false,isLoading:true})
-        if(keyword == null){
-            axios.post(`/api/book/search`).then(
+        if(keyword == ""){
+            axios.post(`/api/book/search/default`).then(
                 response => {
                     console.log("请求成功", response.data);
                         if(response.data.bookList != null){
                             Pubsub.publish('searchBook',{isLoading:false, bookList: response.data.bookList})
                             message.info("ok")
-                            history.push({ pathname: '/book' })
+                            history.push({ pathname: '/default' })
                         }
                 },
                 error => {
                     Pubsub.publish('searchBook',{err: error.message})
                  }
             )
+            // message.error("请输入搜索关键字")
         }
         else{
             axios.post(`/api/book/search/${keyword}`).then(
@@ -41,6 +43,7 @@ class Search extends Component {
                         if(response.data.bookList != null){
                             Pubsub.publish('searchBook',{isLoading:false, bookList: response.data.bookList})
                             message.info("ok")
+                            history.push(`/${keyword}`)
                         }
                 },
                 error => {
@@ -48,7 +51,6 @@ class Search extends Component {
                  }
             )
         }
-    
     }
 
     render() {

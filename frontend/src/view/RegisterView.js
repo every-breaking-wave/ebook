@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input, Form, Button, message } from 'antd';
-import WrappedLoginForm from '../components/LoginForm';
+// import WrappedLoginForm from '../components/LoginForm';
 import { withRouter, Link, useNavigate } from "react-router-dom";
 import { history } from '../utils/history';
 import '../css/login.css'

@@ -2,7 +2,8 @@ import React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
 import '../css/login.css'
-import * as userService from '../services/userService'
+
+import {login} from '../services/userService'
 
 
 class LoginForm extends React.Component {
@@ -13,7 +14,6 @@ class LoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                userService.login(values);
             }
         });
     };

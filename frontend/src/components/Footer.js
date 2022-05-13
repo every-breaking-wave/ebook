@@ -9,34 +9,34 @@ export default class Footer extends React.Component{
     render() {
         return (
         <div>
-            <div className="footerInfo t">
-                <div className="footerInfoContent c">
-                    <div className="footerIcon">
-                        <em className="footerIcon1"></em>
-                        <span className="footerFond">顺丰EMS速达</span>
-                    </div>
-                    <span className="footerIcons"></span>
-                    <div className="footerIcon">
-                        <em className="footerIcon2"></em>
-                        <span className="footerFond">顺丰EMS速达</span>
-                    </div>
-                    <span className="footerIcons"></span>
-                    <div className="footerIcon">
-                        <em className="footerIcon3"></em>
-                        <span className="footerFond">顺丰EMS速达</span>
-                    </div>
-                    <span className="footerIcons"></span>
-                    <div className="footerIcon">
-                        <em className="footerIcon4"></em>
-                        <span className="footerFond">顺丰EMS速达</span>
-                    </div>
-                    <span className="footerIcons"></span>
-                    <div className="footerIcon">
-                        <em className="footerIcon5"></em>
-                        <span className="footerFond">顺丰EMS速达</span>
-                    </div>
-                </div>
-            </div>
+            {/*<div className="footerInfo t">*/}
+            {/*    <div className="footerInfoContent c">*/}
+            {/*        <div className="footerIcon">*/}
+            {/*            <em className="footerIcon1"></em>*/}
+            {/*            <span className="footerFond">顺丰EMS速达</span>*/}
+            {/*        </div>*/}
+            {/*        <span className="footerIcons"></span>*/}
+            {/*        <div className="footerIcon">*/}
+            {/*            <em className="footerIcon2"></em>*/}
+            {/*            <span className="footerFond">顺丰EMS速达</span>*/}
+            {/*        </div>*/}
+            {/*        <span className="footerIcons"></span>*/}
+            {/*        <div className="footerIcon">*/}
+            {/*            <em className="footerIcon3"></em>*/}
+            {/*            <span className="footerFond">顺丰EMS速达</span>*/}
+            {/*        </div>*/}
+            {/*        <span className="footerIcons"></span>*/}
+            {/*        <div className="footerIcon">*/}
+            {/*            <em className="footerIcon4"></em>*/}
+            {/*            <span className="footerFond">顺丰EMS速达</span>*/}
+            {/*        </div>*/}
+            {/*        <span className="footerIcons"></span>*/}
+            {/*        <div className="footerIcon">*/}
+            {/*            <em className="footerIcon5"></em>*/}
+            {/*            <span className="footerFond">顺丰EMS速达</span>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
             <div className="footerMap t">
                 <ul className="footerMaPContent">
                     <li>

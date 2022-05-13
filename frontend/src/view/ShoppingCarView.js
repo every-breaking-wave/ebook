@@ -1,59 +1,73 @@
 import React from 'react';
 import { Layout, Carousel } from 'antd'
-import { withRouter } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import CarHead from "../components/ShoppingCar/CarHead";
 import BookInCar from "../components/ShoppingCar/BookInCar";
 import CarList from "../components/ShoppingCar/CarList";
 import '../css/shoppingCar.css'
 import '../css/base.css'
 import { listBrand, listBrandInCar } from "../components/Brand";
+import {getBook} from "../services/bookService";
+import Pubsub from "pubsub-js";
+import cookie from "react-cookies";
+import {createOrder, createOrderItem} from "../services/createOrder";
+import "../services/createOrder"
+import {getCar} from "../services/shoppingCarService";
+import axios from "axios";
 
 export default class ShoppingCarView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { num: 1, books: [], idNum: 1, sum: 0 }
-        this.setState({ books: listBrand })
+        this.state = { books:[], orderId:0 }
+        // this.setState({ books: listBrand })
         this.componentDidMount = this.componentDidMount.bind(this);
     }
     // 获取购物车内总价格
-    getNum = (bookNum) => {
-        //获取新的priceSum
-        //更新priceSum
-        console.log("refresh")
-        console.log(bookNum)
-        // this.setState({num:bookNum})
-        this.setState({ sum: listBrand[this.state.idNum - 1].price * bookNum })
+    // getNum = (bookNum) => {
+    //     //获取新的priceSum
+    //     //更新priceSum
+    //     console.log("refresh")
+    //     console.log(bookNum)
+    //     // this.setState({num:bookNum})
+    //     this.setState({ sum: listBrand[this.state.idNum - 1].price * bookNum })
+    // }
+    //
+
+    componentDidMount(){
+
     }
 
-    updateBooks = (bookList) => {
-
+    callback=(orderId)=>{
+       this.setState({orderId:orderId})
+        console.log(this.state.orderId)
     }
 
-    componentDidMount() {
-        let user = localStorage.getItem("user");
-        this.setState({ user: user });
-        const query = this.props.location.search;
-        const arr = query.split('&');
-        if (arr.length === 0) {
-            this.setState({ idNum: -1 })
-        }
-        else {
-            const bookId = arr[0].substr(4);
-            console.log(bookId)
-            this.setState({ idNum: Number(bookId) });
-            this.setState({ num: listBrand[this.state.idNum - 1].price * this.state.num })
-            console.log(listBrand[this.state.idNum - 1].price * this.state.num)
-            console.log(this.state.num)
-            console.log(this.state.idNum)
-        }
+    createOrder(){
+        const userAccount = cookie.load("userAccount")
+        console.log(userAccount)
+        //创建 order 并获得order的id
+        const orderId = 0
+        createOrder(userAccount,this.callback)
+        axios.post(`/api/car/cartList`, {
+        }).then(
+            response => {
+                console.log("请求成功", response.data);
+                createOrderItem(response.data.bookInCarList,this.state.orderId)
+            },
+            error => { console.log("请求失败", error); }
+        )
+        // createOrderItem(this.state.books)
     }
-
+    searchBooks = (bookName)=>{
+        console.log("bookView"+bookName);
+    }
 
     render() {
-        const bookId = this.state.idNum;
-        console.log(bookId)
+        this.componentDidMount()
+        const bookList = this.state.books;
         console.log(this.props)
+        console.log(bookList)
         // this.setState({sum:listBrand[bookId-1].price})
         return (
             <div>
@@ -74,7 +88,7 @@ export default class ShoppingCarView extends React.Component {
 
                                 <div className="checkoutProductBody">
                                     <div className="productBodyItem">
-                                        <CarList bookId={bookId} updateBooks={this.updateBooks.bind(this)} getNum={this.getNum.bind(this)} />
+                                        <CarList info={bookList}/>
                                         {/*<CarList/>*/}
                                     </div>
                                 </div>
@@ -100,7 +114,12 @@ export default class ShoppingCarView extends React.Component {
                                             <div className="rightSave"><i></i><span>共节省：￥0.00</span></div>
                                         </li>
                                     </ul>
-                                    <div className="rightSubmit r">立即结算</div>
+                                    <div className="rightSubmit r">
+                                        <Link to="/car" onClick={this.createOrder.bind(this)}>
+                                        立即结算
+                                        </Link>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -128,23 +147,3 @@ export default class ShoppingCarView extends React.Component {
     }
 }
 
-
-// 优惠券组件
-{/*<div id="checkoutCoupons">*/ }
-{/*    <div className="checkoutCouponsInfo t">*/ }
-{/*        <div className="CouponsInfoContent c">*/ }
-{/*            <p className="CouponsInfoContentH c">*/ }
-{/*                <span className="sp1">优惠券</span>*/ }
-{/*                <span className="sp2">了解优惠券</span>*/ }
-{/*                <span className="sp3">使用规则</span>*/ }
-{/*                <input type="button" value="+ 输入优惠码" />*/ }
-{/*            </p>*/ }
-{/*            <div className="CouponsInfoContentBody">*/ }
-{/*                <div className="couponBody">*/ }
-{/*                    <div className="couponNone"></div>*/ }
-{/*                    <span>您目前没有优惠券</span>*/ }
-{/*                </div>*/ }
-{/*            </div>*/ }
-{/*        </div>*/ }
-{/*    </div>*/ }
-{/*</div>*/ }
