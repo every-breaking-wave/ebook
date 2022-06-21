@@ -22,12 +22,12 @@ public class BookController {
 
 
     @PostMapping("/getbook/{id}")
-    public GetBookResponse getBook(@PathVariable String id){
+    public GetBookResponse getBook(@PathVariable Integer id){
         return bookService.getBook(id);
     }
 
     @PostMapping("/getbooks/{id}")
-    public GetBookResponse getBooks(@PathVariable String id, HttpServletRequest request){
+    public GetBookResponse getBooks(@PathVariable Integer id, HttpServletRequest request){
         return bookService.getBooks(id,request);
     }
 

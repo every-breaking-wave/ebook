@@ -64,8 +64,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="Orderitem" />
-                  <option name="tableName" value="orderitem" />
+                  <option name="className" value="Book" />
+                  <option name="tableName" value="book" />
                 </TableUIInfo>
               </list>
             </option>

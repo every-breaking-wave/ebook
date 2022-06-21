@@ -2,11 +2,7 @@ import React from 'react';
 import {List} from 'antd';
 import Pubsub from 'pubsub-js'
 import Book from './Book'
-import {history} from "../utils/history";
-import {getBooks} from "../services/bookService";
-// import '../services/list.js'
 import '../css/detail.css'
-import { data } from 'jquery';
 
 
 
@@ -25,7 +21,6 @@ export default class BookList extends React.Component{
     }
 
     componentDidMount(){
-        // this.props.history.push({pathname:`/book/${id}`})
         console.log("props = "+this.props)
         Pubsub.subscribe('searchBook',(_,stateObj)=>{
             console.log('收到书本数据!',stateObj);

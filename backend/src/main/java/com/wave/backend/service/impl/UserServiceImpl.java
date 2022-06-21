@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wave.backend.constant.UserConstant;
 import com.wave.backend.constant.UserServiceStatus;
 import com.wave.backend.mapper.AdminMapper;
+import com.wave.backend.mapper.CarMapper;
 import com.wave.backend.model.domain.Admin;
+import com.wave.backend.model.domain.Car;
 import com.wave.backend.model.domain.User;
 import com.wave.backend.model.domain.response.UserLoginResponse;
 import com.wave.backend.model.domain.response.UserRegisterResponse;
@@ -20,6 +22,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * 用户服务实现类
@@ -40,6 +44,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
     @Resource
     private AdminMapper adminMapper;
+    @Resource
+    private CarMapper carMapper;
 
     @Override
     public UserRegisterResponse userRegister(String userAccount, String userPassword) {
@@ -79,12 +85,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User user = new User();
         user.setUserAccount(userAccount);
         user.setUserPassword(encryptPassword);
-        int saveResult =  userMapper.insert(user);
-
+        int saveResult = userMapper.insert(user);
         if (saveResult == 0) {
             userRegisterResponse.setStatus(UserServiceStatus.USER_UNKNOWN_ERROR);
             return userRegisterResponse;
         }
+        // 初始化购物车
+        Car car = new Car();
+        car.setUserId(user.getId());
+        carMapper.insert(car);
+
         userRegisterResponse.setStatus(UserServiceStatus.USER_ALL_OK);
         userRegisterResponse.setId(0L);
         return userRegisterResponse;
@@ -131,6 +141,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return userLoginResponse;
         }
 
+        // 判断用户是否被禁用
+        if (user != null && user.getUserStatus() == 1){
+            log.error("User login failed: User has been banned.");
+            userLoginResponse.setStatus(UserServiceStatus.USER_BEEN_BANNED);
+            return userLoginResponse;
+        }
+
         // 3.用户脱敏
 //        User safeUser = getSaveUser(user);
 //
@@ -143,7 +160,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             userLoginResponse.setUserAccount(user.getUserAccount());
             userLoginResponse.setRole(UserConstant.DEFAULT_ROLE);
         }
-        else if (admin != null) {
+        else {
             request.getSession().setAttribute(UserConstant.USER_LOGIN_STATE, admin);
             userLoginResponse.setId(admin.getId());
             userLoginResponse.setUserAccount(admin.getUserAccount());
@@ -151,13 +168,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         userLoginResponse.setStatus(UserServiceStatus.USER_ALL_OK);
+
         return userLoginResponse;
     }
 
     @Override
     public User getSaveUser(User originUser) {
         User safeUser = new User();
-        safeUser.setId(0L);
+        safeUser.setId(0);
         safeUser.setUsername(originUser.getUsername());
         safeUser.setUserAccount(originUser.getUserAccount());
         safeUser.setAvatarUrl(originUser.getAvatarUrl());
@@ -169,5 +187,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safeUser.setIsDelete(0);
         safeUser.setUserRole(originUser.getUserRole());
         return safeUser;
+    }
+
+    @Override
+    public int userLogout(HttpServletRequest request)  {
+        // 移除登录态
+        request.getSession().removeAttribute(USER_LOGIN_STATE);
+        return 1;
     }
 }

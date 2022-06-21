@@ -8,7 +8,13 @@ import BookView from "./view/BookView";
 import RegisterView from "./view/RegisterView"
 import { history } from "./utils/history";
 import ShoppingCarView from "./view/ShoppingCarView";
+import AdminView from "./view/BookManageView"
+import UserManagerView from "./view/UserManageView"
+import OrderManageView from "./view/OrderManageView";
+import UserView from "./view/UserView"
 import BookDetail from "./components/BookDetail/BookDetail";
+import BookManageView from "./view/BookManageView";
+
 
 
 // TODO: 尚未实现前端鉴权
@@ -25,15 +31,18 @@ class BasicRoute extends React.Component {
     render() {
         return (
             <div>
-                
-                <BrowserRouter history={history}>
+                <BrowserRouter >
                     <Switch>
-                        <LoginRoute exact path="/login" component={LoginView} />
-                        <Route exact path="/book/:id" component={BookView} />
-                        <Route exact path="/car" component={ShoppingCarView} />
-                        <Route exact path="/register" component={RegisterView} />
-                        {/*<Route exact path="/book/:id" component={BookDetail} />*/}
-                        <PrivateRoute exact path="/:keyValue" component={HomeView} />
+                        <Route  path="/login" component={LoginView} />
+                        <Route  path="/register" component={RegisterView} />
+                        <PrivateRoute  path="/book/:id" component={BookView} />
+                        <PrivateRoute  path="/car" component={ShoppingCarView} />
+                        <PrivateRoute  path="/bookManage/:keyValue" component={BookManageView} />
+                        <PrivateRoute  path="/userManage" component={UserManagerView} />
+                        <PrivateRoute  path="/orderManage/:keyValue" component={OrderManageView} />
+                        <PrivateRoute  path="/userCenter" component={UserView} />
+                        <PrivateRoute  path="/:keyValue" component={HomeView} />
+                        <Redirect from="/bookManage/*" to="/bookManage/default" />
                         <Redirect from="/*" to="/default" />
                     </Switch>
                 </BrowserRouter>

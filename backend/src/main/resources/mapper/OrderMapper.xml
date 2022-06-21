@@ -5,8 +5,8 @@
 <mapper namespace="com.wave.backend.mapper.OrderMapper">
 
     <resultMap id="BaseResultMap" type="com.wave.backend.model.domain.Order">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="userId" column="userId" jdbcType="INTEGER"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 

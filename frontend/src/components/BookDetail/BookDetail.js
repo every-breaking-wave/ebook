@@ -10,66 +10,36 @@ import axios from "axios";
 import {onLogin} from "../../services/userService";
 
 
-
 export default class BookDetail extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {book: null, num:1};
+        this.state = {book: null, num: 1, carId: 0};
     }
+
     onChange(value) {
         console.log('changed', value);
-        this.setState({num:value})
+        this.setState({num: value})
     }
 
-    handleClick (){
-        let inFifteenMinutes = new Date(new Date().getTime() + 24 * 3600 * 1000);//一天
-
-        console.log(this.props.info.id)
+    handleClick() {
+        const userId = cookie.load("userId")
+        console.log(userId)
+        // console.log(this.props.info.id)
         axios.post(`/api/car/addCart`, {
             bookId: this.props.info.id,
-            count: this.state.num
+            count: this.state.num,
+            userId: userId
         }).then(
             response => {
                 console.log("请求成功", response.data);
-                    message.info("购物车添加成功")
-                    // let { history } = this.props
-                    // onLogin(response.data.userAccount)
-                    // history.push({ pathname: '/car' })
-
-                // else message.error("登录失败：用户不存在或密码错误")
+                message.info("购物车添加成功")
             },
-            error => { console.log("请求失败", error); }
+            error => {
+                console.log("请求失败", error);
+            }
         )
-
-        // axios.post(`/api/car/cartList`, {
-        // }).then(
-        //     response => {
-        //         console.log("请求成功", response.data);
-        //         message.info("购物车添加成功")
-        //         // let { history } = this.props
-        //         // onLogin(response.data.userAccount)
-        //         // history.push({ pathname: '/car' })
-        //
-        //         // else message.error("登录失败：用户不存在或密码错误")
-        //     },
-        //     error => { console.log("请求失败", error); }
-        // )
-        //
-
-
-
-        //
-        // cookie.save('bookId', "12",{ expires: inFifteenMinutes })
-        // cookie.save('bookId', "13",{ expires: inFifteenMinutes })
-        // console.log(cookie.loadAll())
-        // console.log(this.props)
-        // const {book}
-        // const {info} = this.props;
-        // Pubsub.publish('addToCar',{book: info, addBook:true})
-        // console.log("cookie" + cookie.load('bookId'))
     }
-
 
 
     render() {
@@ -111,21 +81,22 @@ export default class BookDetail extends React.Component {
 
                         <div className="size l">
                             <p className="actTitle l">状态</p>
-                            <p className="size1 l"><a href="#">{info.inventory>0?("有货"):("缺货")}</a></p>
+                            <p className="size1 l"><a href="#">{info.inventory > 0 ? ("有货") : ("缺货")}</a></p>
                         </div>
                         <div>
 
 
                             <div className="goButton l">
                                 {/*<div className="number l">*/}
-                                <InputNumber min={1} max={10} defaultValue={1} onChange={this.onChange.bind(this)} size={"large"}/>
+                                <InputNumber min={1} max={10} defaultValue={1} onChange={this.onChange.bind(this)}
+                                             size={"large"}/>
 
                             </div>
 
                             <div className="addCar l" style={{marginTop: 20, marginLeft: 20}}>
 
-                                <Link to= {`/car/`}
-                                      target="_blank"
+                                <Link to={`/car`}
+                                      // target="_blank"
                                       onClick={this.handleClick.bind(this)}
                                 >
                                     <p>

@@ -5,19 +5,20 @@
 <mapper namespace="com.wave.backend.mapper.BookMapper">
 
     <resultMap id="BaseResultMap" type="com.wave.backend.model.domain.Book">
-            <id property="id" column="id" jdbcType="BIGINT"/>
+            <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="bookName" column="bookName" jdbcType="VARCHAR"/>
-            <result property="cover" column="cover" jdbcType="VARCHAR"/>
-            <result property="price" column="price" jdbcType="DECIMAL"/>
+            <result property="category" column="category" jdbcType="VARCHAR"/>
             <result property="author" column="author" jdbcType="VARCHAR"/>
-            <result property="inventory" column="inventory" jdbcType="INTEGER"/>
+            <result property="price" column="price" jdbcType="DECIMAL"/>
             <result property="bookDesciption" column="bookDesciption" jdbcType="VARCHAR"/>
-            <result property="category" column="书本分类" jdbcType="VARCHAR"/>
+            <result property="inventory" column="inventory" jdbcType="INTEGER"/>
+            <result property="cover" column="cover" jdbcType="VARCHAR"/>
+            <result property="isDeleted" column="isDeleted" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,bookName,cover,
-        price,author,inventory,
-        bookDesciption,category
+        id,bookName,category,
+        author,price,bookDesciption,
+        inventory,cover,isDeleted
     </sql>
 </mapper>

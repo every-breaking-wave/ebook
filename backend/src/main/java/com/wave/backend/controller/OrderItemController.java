@@ -1,17 +1,18 @@
 package com.wave.backend.controller;
 
-import com.wave.backend.model.domain.Book;
-import com.wave.backend.model.domain.BookInCar;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.wave.backend.mapper.OrderMapper;
+import com.wave.backend.mapper.OrderitemMapper;
+import com.wave.backend.model.domain.*;
 import com.wave.backend.model.domain.request.CreateOrderItemRequest;
-import com.wave.backend.model.domain.request.CreateOrderRequest;
+import com.wave.backend.model.domain.response.CarListResponse;
 import com.wave.backend.model.domain.response.CreateOrderItemResponse;
-import com.wave.backend.model.domain.response.CreateOrderResponse;
 import com.wave.backend.service.OrderItemService;
-import com.wave.backend.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,10 @@ public class OrderItemController {
 
     @Resource
     private OrderItemService orderItemService;
+    @Resource
+    private OrderMapper orderMapper;
+    @Resource
+    private OrderitemMapper orderitemMapper;
 
 
     @PostMapping("/create")
@@ -30,9 +35,29 @@ public class OrderItemController {
 
         if (createOrderItemRequest == null)
             return null;
-        Long orderId =  createOrderItemRequest.getOrderId();
-        List<BookInCar> bookList = createOrderItemRequest.getBookList();
+        Integer orderId =  createOrderItemRequest.getOrderId();
+        List<CarItem> bookList = createOrderItemRequest.getBookList();
 
         return orderItemService.createOrderItem(bookList, orderId);
     }
+
+    @PostMapping("/list")
+    public List<OrderItem> GetOrderItemList(Integer userId){
+        //TODO: 通过userId得到orderId, 后续可改进
+        QueryWrapper<OrderItem> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<Order> queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.eq("userId", userId);
+        Order order = orderMapper.selectOne(queryWrapper1);
+        queryWrapper.eq("orderId",order.getId());
+
+        List<OrderItem> orderItems = orderitemMapper.selectList(queryWrapper);
+        return orderItems;
+    }
+
+    @PostMapping("/search/{keyword}")
+    public List<List<DetailOrderItem>> searchOrderItems(@PathVariable String keyword){
+        return orderItemService.searchOrderItems(keyword);
+    }
+
+
 }

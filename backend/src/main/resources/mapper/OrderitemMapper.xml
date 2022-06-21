@@ -5,14 +5,15 @@
 <mapper namespace="com.wave.backend.mapper.OrderitemMapper">
 
     <resultMap id="BaseResultMap" type="com.wave.backend.model.domain.OrderItem">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="bookId" column="bookId" jdbcType="BIGINT"/>
-            <result property="orderId" column="orderId" jdbcType="BIGINT"/>
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="bookId" column="bookId" jdbcType="INTEGER"/>
+            <result property="orderId" column="orderId" jdbcType="INTEGER"/>
             <result property="num" column="num" jdbcType="INTEGER"/>
+            <result property="price" column="price" jdbcType="DECIMAL"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,bookId,orderId,
-        num
+        num,price
     </sql>
 </mapper>

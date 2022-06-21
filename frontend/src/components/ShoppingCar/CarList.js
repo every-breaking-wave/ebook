@@ -26,12 +26,6 @@ class CarList extends Component {
        getCar(this.callback)
     }
 
-    // getAllPrice() {
-    //     //获取新的priceSum
-    //     const newSum = price;
-    //     //更新priceSum
-    //     this.setState({sum:newSum})
-    // }
     render() {
         // this.componentDidMount()
         const bookList = this.state.bookList || []
@@ -49,7 +43,6 @@ class CarList extends Component {
                 }
             </div>
         );
-
     }
 }
 

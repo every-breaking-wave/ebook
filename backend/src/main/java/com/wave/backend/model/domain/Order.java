@@ -24,7 +24,7 @@ public class Order implements Serializable {
     /**
      * 
      */
-    private Long userId;
+    private  Integer userId;
 
     /**
      * 

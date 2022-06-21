@@ -3,9 +3,11 @@ package com.wave.backend.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import com.wave.backend.model.domain.Order;
+import com.wave.backend.model.domain.OrderItem;
 import com.wave.backend.model.domain.response.CreateOrderResponse;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -15,5 +17,9 @@ import java.util.Date;
 */
 public interface OrderService extends IService<Order> {
 
-    CreateOrderResponse createOrder(String userAccount);
+    CreateOrderResponse createOrder(Integer userId);
+
+    boolean delOrder(Integer userId);
+
+    List<Order> getOrdersById(Integer userId);
 }

@@ -16,7 +16,7 @@ public interface BookService extends IService<Book> {
 
     SearchBookResponse searchBook(String searchKey);
 
-    GetBookResponse getBook(String id);
+    GetBookResponse getBook(Integer id);
 
-    GetBookResponse getBooks(String id, HttpServletRequest request);
+    GetBookResponse getBooks(Integer id, HttpServletRequest request);
 }

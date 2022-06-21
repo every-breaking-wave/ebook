@@ -12,7 +12,7 @@ public class BookInCar implements Serializable {
      *
      */
     @TableId
-    private Long id;
+    private Integer id;
 
     /**
      *
@@ -49,5 +49,5 @@ public class BookInCar implements Serializable {
      */
     private String category;
 
-    Integer countInCar;
+    private Integer countInCar;
 }

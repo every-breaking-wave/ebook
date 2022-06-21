@@ -2,25 +2,29 @@ import React from "react";
 import '../../css/base.css'
 import '../../css/shoppingCar.css'
 import '../../services/shoppingCarService'
-import {addCar, delCar, minCar} from "../../services/shoppingCarService";
+import {addCar, changeCar, delCar, minCar} from "../../services/shoppingCarService";
 import * as util from "util";
+import {InputNumber,Checkbox} from "antd";
 
 
 export default class BookInCar extends React.Component{
     constructor(props) {
         super(props);
-        this.state  = {utils: 1}
+        this.state  = {utils: 1,num:1}
         this.minValue = this.minValue.bind(this)
         this.addValue = this.addValue.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
     }
-
+    onChange(value) {
+        console.log('changed', value);
+        changeCar(value,this.props.info.bookId)
+        this.setState({num:value})
+    }
     addValue(){
         addCar(this.props.info.id)
         this.setState({utils: !util})
         console.log(this.state.utils)
         // this.props.refresh()
-
     }
     minValue(){
         if(this.props.info.countInCar === 1) {
@@ -33,32 +37,37 @@ export default class BookInCar extends React.Component{
             // this.props.refresh()
         }
     }
-    changeCheck(){
 
-    }
     changeNum = (e)=>{
         if(e.target.value <= 0) alert("书本数量最少为1")
         else {
             this.props.getNum(e.target.value)
             this.setState({
-                bookNum: e.target.value
+                num: e.target.value
             })
         }
     }
 
+    componentWillMount() {
+        const {info} = this.props
+        this.setState({
+            num: info.countInCar
+        } )
+        console.log(info)
+    }
+
 
     handleDelete(){
-        delCar(this.props.info.id)
-        this.setState({utils:1})
+        this.onChange(0)
     }
 
     render() {
         console.log(this.props)
         const {info} = this.props;
-        const bookNum = this.state.bookNum;
         return(
             <div onClick={this.hide} className="productBodyItemContent">
-                <input type={"checkbox"} className="checkBox checkIcon"></input>
+                {/*<input type={"checkbox"} className="checkBox checkIcon"></input>*/}
+                <Checkbox defaultChecked={false} diabled />
                 <a className="itemImg" href="">
                     <img src={info.cover} alt="" className={"bookInCar"}/>
                 </a>
@@ -70,13 +79,11 @@ export default class BookInCar extends React.Component{
                 </div>
                 <div className="itemInfoUnion2">
                     <div className="itemInfoUnion2Module l">
-                        <i onClick={this.minValue.bind(this)} className="itemInfoUnion2ModuleI l itemInfoUnion2ModuleI2">-</i>
-                        <input   onChange={(e) => {this.changeNum(e);}}  type="text" className="itemInfoUnion2ModuleNum l" value={info.countInCar}/>
-                        <i onClick={this.addValue.bind(this)} className="itemInfoUnion2ModuleI l itemInfoUnion2ModuleI2">+</i>
+                        <InputNumber min={1} max={10} defaultValue={this.state.num} onChange={this.onChange.bind(this)} size={"normal"}/>
                     </div>
                 </div>
                 <div className="itemInfoUnion3">
-                    <span className="sumNum"> {info.price * info.countInCar} </span>
+                    <span className="sumNum"> {info.price * 10 * this.state.num / 10} </span>
                 </div>
                 <div className="itemInfoUnion4">
                     <i onClick={this.handleDelete.bind(this)} className="delete"> </i>

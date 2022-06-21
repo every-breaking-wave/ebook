@@ -1,13 +1,9 @@
 import React from 'react';
 import {Card, message} from 'antd';
 import { Link } from 'react-router-dom'
-import axios from "axios";
-// import '../css/list.css'
-// import '../css/base.css'
 const { Meta } = Card;
 
 export default class Book extends React.Component {
-
 
     render() {
 
@@ -49,8 +45,6 @@ export default class Book extends React.Component {
 
             </Link>
         );
-
-        // );
     }
 
 }

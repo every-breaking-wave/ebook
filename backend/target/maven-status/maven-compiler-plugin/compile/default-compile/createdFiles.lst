@@ -1,9 +1,0 @@
-com\wave\backend\service\impl\userServiceImpl.class
-com\wave\backend\service\userService.class
-com\wave\backend\Constant\userConstant.class
-com\wave\backend\model\domain\request\UserRegisterRequest.class
-com\wave\backend\BackendApplication.class
-com\wave\backend\controller\UserController.class
-com\wave\backend\model\domain\User.class
-com\wave\backend\Mapper\UserMapper.class
-com\wave\backend\model\domain\request\UserLoginRequest.class

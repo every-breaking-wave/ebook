@@ -57,12 +57,56 @@ class LoginView extends React.Component {
                 if (response.data.status == 'USER_ALL_OK') {
                     message.info("登陆成功，祝您购物愉快")
                     let { history } = this.props
-                    onLogin(response.data.userAccount)
+                    onLogin(response.data.id)
                     history.push({ pathname: '/' })
                 }
-                else message.error("登录失败：用户不存在或密码错误")
+                else if("USER_NOT_EXIST" == response.data.status){
+                    message.error("登录失败：用户不存在或密码错误")
+                }
+                else if("USER_BEEN_BANNED" == response.data.status){
+                    message.error("登录失败：用户被禁用")
+                }
+                else if("USER_ACCOUNT_PASSWORD_NULL" == response.data.status){
+                    message.error("登录失败：账号或密码不能为空")
+                }
+                else if("USER_ACCOUNT_ILLEGAL" == response.data.status){
+                    message.error("登录失败：账号不能包含非法字符")
+                }
+
+                // switch (response.data.status) {
+                //     case "USER_ALL_OK":
+                //         message.info("登陆成功，祝您购物愉快")
+                //         let { history } = this.props
+                //         onLogin(response.data.id)
+                //         console.log("hhh")
+                //         history.push({ pathname: '/default' })
+                //         break
+                //     case "USER_NOT_EXIST":
+                //         message.error("登录失败：用户不存在或密码错误")
+                //         break
+                //     case "USER_BEEN_BANNED":
+                //         message.error("登录失败：用户被禁用")
+                //         break
+                //     case "USER_ACCOUNT_PASSWORD_NULL":
+                //         message.error("登录失败：账号或密码不能为空")
+                //         break
+                //     case "USER_ACCOUNT_ILLEGAL":
+                //         message.error("登录失败：账号不能包含非法字符")
+                //         break
+                //     default:
+                //         message.error("登录失败：")
+                //         break
+                // }
+                // if (response.data.status == 'USER_ALL_OK') {
+                //     message.info("登陆成功，祝您购物愉快")
+                //     let { history } = this.props
+                //     onLogin(response.data.id)
+                //     history.push({ pathname: '/' })
+                // }
+
             },
-            error => { console.log("请求失败", error); }
+            error => { console.log("请求失败", error);
+            }
         )
     }
 

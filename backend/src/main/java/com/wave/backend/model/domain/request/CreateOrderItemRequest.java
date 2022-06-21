@@ -2,6 +2,7 @@ package com.wave.backend.model.domain.request;
 
 import com.wave.backend.model.domain.Book;
 import com.wave.backend.model.domain.BookInCar;
+import com.wave.backend.model.domain.CarItem;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,10 +13,10 @@ import java.util.List;
 public class CreateOrderItemRequest implements Serializable {
 
     private static final long serialVersionUID = -6937919124813537741L;
-    private Long id;
+    private Integer id;
 
-    private List<BookInCar> bookList;
+    private List<CarItem> bookList;
 
-    private Long orderId;
+    private Integer orderId;
 
 }

@@ -5,7 +5,7 @@
 <mapper namespace="com.wave.backend.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.wave.backend.model.domain.User">
-            <id property="id" column="id" jdbcType="BIGINT"/>
+            <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="userAccount" column="userAccount" jdbcType="VARCHAR"/>
             <result property="avatarUrl" column="avatarUrl" jdbcType="VARCHAR"/>

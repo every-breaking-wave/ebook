@@ -65,7 +65,6 @@ class Search extends Component {
                         </a>
                     </div>
                     <div className="searchBox l">
-
                         {/*search功能*/}
 
                         <div className="searchBoxMain">
@@ -76,56 +75,20 @@ class Search extends Component {
                             <a onClick={this.handleSearch} className="searchButton">搜索</a>
                         </div>
 
-                        <ul className="searchBoxKey">
-                            <a href="">三体</a>
-                            <a href="">冰菓</a>
-                            <a href="">X的悲剧</a>
-                            <a href="">Y的悲剧</a>
-                            <a href="">Z的悲剧</a>
-                            <a href="">射雕英雄传</a>
-                            <a href="">神雕侠侣</a>
-                            <a href="">倚天屠龙记</a>
-                        </ul>
                     </div>
 
                     <div className="searchIContentBag r">
                         <div className="searchIContentBag01 r">
                             <a href="/car">
                                 <em className="bagIcon"></em>
-                                购物车<span className="num">3</span>件
+                                购物车
                             </a>
-                        </div>
-                        <div className="searchIContentBag02 r">
-                            <div className="searchIContentDown">
-                                <div className="notLogin">
-                                    <em></em>
-                                    <span>购物车内暂时没有商品，登录后将显示您之前加入的商品</span>
-                                    <a href="/car">查看</a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            // <div className="searchBoxMain">
-            //     <div className="searchBoxInput l">
-            //         <input ref={c => this.keyWordElement = c} type="text" placeholder="搜索你想要的书目"/>&nbsp;
-            //     </div>
-            //     {/*<a href="#">*/}
-            //     {/*    <div onClick={this.search} className="searchButton" >搜索</div>*/}
-            //     {/*</a>*/}
-            //     {/*<Input*/}
-            //     {/*    placeholder="请输入用户名"*/}
-            //     {/*    style={{ width: "230px" }}*/}
-            //     {/*    ref={c => this.keyWordElement = c}*/}
-            //     {/*    type="text"*/}
-            //     {/*    onChange={(e) => this.handleSearch(e)}*/}
-            //     {/*/>*/}
-            //     <div onClick={this.search} className="searchButton" >搜索</div>
-            //
-            //     {/*<Input placeholder="input search loading with enterButton" loading enterButton />*/}
-            // </div>
+
         );
     }
 }

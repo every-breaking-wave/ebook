@@ -6,7 +6,8 @@ import cookie from "react-cookies";
 export const addCar = (bookId)=>{
     axios.post(`/api/car/addCart`, {
         bookId: bookId,
-        count: 1
+        count: 1,
+        userId: cookie.load("userId")
     }).then(
         response => {
             console.log("请求成功", response.data);
@@ -20,7 +21,8 @@ export const addCar = (bookId)=>{
 export const minCar = (bookId)=>{
     axios.post(`/api/car/minCart`, {
         bookId: bookId,
-        count: 1
+        count: 1,
+        userId: cookie.load("userId")
     }).then(
         response => {
             console.log("请求成功", response.data);
@@ -29,10 +31,24 @@ export const minCar = (bookId)=>{
         error => { console.log("请求失败", error); }
     )
 }
+export const changeCar = (num,bookId)=>{
+    axios.post(`/api/car/changeCart`, {
+        bookId: bookId,
+        count: num,
+        userId: cookie.load("userId")
+    }).then(
+        response => {
+            console.log("请求成功", response.data);
+            // message.info("购物车改变成功")
+        },
+        error => { console.log("请求失败", error); }
+    )
+}
 
 export  const delCar = (bookId)=>{
     axios.post(`/api/car/delCart`, {
         bookId: bookId,
+        userId: cookie.load("userId")
     }).then(
         response => {
             console.log("请求成功", response.data);
@@ -44,6 +60,7 @@ export  const delCar = (bookId)=>{
 
  export function getCar(callback){
     axios.post(`/api/car/cartList`, {
+        userId: cookie.load("userId")
     }).then(
         response => {
             console.log("请求成功", response.data);

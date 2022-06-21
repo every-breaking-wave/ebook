@@ -33,6 +33,8 @@ implements BookService{
         log.info("Searching books");
         SearchBookResponse searchBookResponse = new SearchBookResponse();
         QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
+        // 过滤已删除书本
+        queryWrapper.eq("isDeleted", 0);
         // 若为空查询，返回所有书本
         if(!searchKey.equals("default")){
             queryWrapper.like("bookName",searchKey);
@@ -42,7 +44,7 @@ implements BookService{
     }
 
     @Override
-    public GetBookResponse getBook(String id) {
+    public GetBookResponse getBook(Integer id) {
         log.info("getting book detail");
         GetBookResponse getBookResponse = new GetBookResponse();
         getBookResponse.setBook(bookMapper.selectById(id));
@@ -51,14 +53,11 @@ implements BookService{
 
     /**
      * 根据权限展示账单中的书
-     * @param id
-     * @param request
-     * @return
      */
     @Override
-    public GetBookResponse getBooks(String id, HttpServletRequest request) {
+    public GetBookResponse getBooks(Integer id, HttpServletRequest request) {
         // 判断权限
-        if(userController.isAdmin(request) == true){
+        if(userController.isAdmin(request)){
             return  null;
         }
         return null;

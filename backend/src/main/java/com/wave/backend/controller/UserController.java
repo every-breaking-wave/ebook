@@ -3,14 +3,18 @@ package com.wave.backend.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wave.backend.constant.UserConstant;
+import com.wave.backend.model.domain.Admin;
+import com.wave.backend.model.domain.DetailOrderItem;
 import com.wave.backend.model.domain.User;
 import com.wave.backend.model.domain.request.UserLoginRequest;
 import com.wave.backend.model.domain.request.UserRegisterRequest;
 import com.wave.backend.model.domain.response.UserLoginResponse;
 import com.wave.backend.model.domain.response.UserRegisterResponse;
+import com.wave.backend.service.OrderItemService;
 import com.wave.backend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.wave.backend.constant.UserConstant.ADMIN_ROLE;
+import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * author : wave
@@ -31,6 +36,8 @@ import static com.wave.backend.constant.UserConstant.ADMIN_ROLE;
 public class UserController {
     @Resource
     private UserService userService;
+    @Resource
+    private OrderItemService orderItemService;
 
     @PostMapping("/register")
     public UserRegisterResponse userRegister(@RequestBody UserRegisterRequest userRegisterRequest){
@@ -42,7 +49,6 @@ public class UserController {
 
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();
-        String checkPassword = userRegisterRequest.getCheckPassword();
         // 判空
         if(StringUtils.isAnyBlank(userAccount,userPassword)){
             return null;
@@ -57,10 +63,6 @@ public class UserController {
             return null;
         String userAccount = userLoginRequest.getUserAccount();
         String userPassword = userLoginRequest.getUserPassword();
-        // 判空
-        if(StringUtils.isAnyBlank(userAccount,userPassword)){
-            return null;
-        }
         return userService.userLogin(userAccount, userPassword, request);
     }
 
@@ -90,16 +92,30 @@ public class UserController {
 
     @PostMapping ("/check")
     public boolean checkAuth(HttpServletRequest request){
-        Object userObj = request.getSession().getAttribute(UserConstant.USER_LOGIN_STATE);
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
         User user = (User) userObj;
         return user != null;
     }
 
+    @PostMapping("/role")
     public boolean isAdmin(HttpServletRequest request){
-        Object userObj = request.getSession().getAttribute(UserConstant.USER_LOGIN_STATE);
-        User user = (User) userObj;
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        Admin user = (Admin) userObj;
         return user != null && user.getUserRole() == ADMIN_ROLE; // 返回空数组
     }
+
+    @PostMapping("/logout")
+    public Integer userLogout(HttpServletRequest request) {
+        int result = userService.userLogout(request);
+        return result;
+    }
+
+    @PostMapping("/get-user-full-order/{userId}")
+    public List<List<DetailOrderItem>>getUserFullOrderItems(@PathVariable Integer userId, HttpServletRequest request){
+        return orderItemService.getUserFullOrderItems(userId);
+    }
+
+
 
 
 }

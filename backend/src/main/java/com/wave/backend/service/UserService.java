@@ -6,6 +6,8 @@ import com.wave.backend.model.domain.response.UserRegisterResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
+
 /**
 * @author 16541
 * @description 针对表【user(用户表)】的数据库操作Service
@@ -30,4 +32,6 @@ public interface UserService extends IService<User> {
      * @return 脱敏后的用户
      */
     User getSaveUser(User originUser);
+
+    public int userLogout(HttpServletRequest request);
 }

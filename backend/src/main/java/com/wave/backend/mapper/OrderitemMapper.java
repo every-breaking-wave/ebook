@@ -11,5 +11,4 @@ import com.wave.backend.model.domain.OrderItem;
 */
 public interface OrderitemMapper extends BaseMapper<OrderItem> {
 
-
 }

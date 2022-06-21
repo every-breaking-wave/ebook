@@ -1,0 +1,15 @@
+package com.wave.backend.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wave.backend.model.domain.CarItem;
+
+/**
+* @author Feng
+* @description 针对表【caritem】的数据库操作Mapper
+* @createDate 2022-05-15 13:49:47
+* @Entity generator.domain.Caritem
+*/
+public interface CaritemMapper extends BaseMapper<CarItem> {
+
+
+}

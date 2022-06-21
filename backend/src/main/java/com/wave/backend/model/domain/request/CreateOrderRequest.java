@@ -9,7 +9,6 @@ import java.util.Date;
 public class CreateOrderRequest implements Serializable {
    private static final long serialVersionUID = -8648194184235698710L;
 
-   private String userAccount;
+   private Integer userId;
 
-   private Date createDate;
 }

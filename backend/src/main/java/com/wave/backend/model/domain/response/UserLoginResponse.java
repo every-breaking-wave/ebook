@@ -12,7 +12,8 @@ public class UserLoginResponse implements Serializable {
 
     private String userAccount;
 
-    private Long id;
+    private Integer id;
+
 
     private int role;
 

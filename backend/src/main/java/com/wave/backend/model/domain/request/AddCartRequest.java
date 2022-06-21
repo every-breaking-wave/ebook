@@ -9,7 +9,9 @@ public class AddCartRequest implements Serializable {
 
     private static final long serialVersionUID = -2472450424831582877L;
 
-    private String bookId;
+    private Integer bookId;
 
     private Integer count;
+
+    private Integer userId;
 }

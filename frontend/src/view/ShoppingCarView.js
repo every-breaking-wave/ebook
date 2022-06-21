@@ -1,19 +1,13 @@
 import React from 'react';
-import { Layout, Carousel } from 'antd'
 import {Link, withRouter} from "react-router-dom";
-import CarHead from "../components/ShoppingCar/CarHead";
-import BookInCar from "../components/ShoppingCar/BookInCar";
 import CarList from "../components/ShoppingCar/CarList";
 import '../css/shoppingCar.css'
 import '../css/base.css'
-import { listBrand, listBrandInCar } from "../components/Brand";
-import {getBook} from "../services/bookService";
-import Pubsub from "pubsub-js";
 import cookie from "react-cookies";
-import {createOrder, createOrderItem} from "../services/createOrder";
-import "../services/createOrder"
-import {getCar} from "../services/shoppingCarService";
+import {orderService, createOrderItem} from "../services/orderService";
+import "../services/orderService"
 import axios from "axios";
+import HeaderL from "../components/Header/Header";
 
 export default class ShoppingCarView extends React.Component {
 
@@ -23,19 +17,23 @@ export default class ShoppingCarView extends React.Component {
         // this.setState({ books: listBrand })
         this.componentDidMount = this.componentDidMount.bind(this);
     }
-    // 获取购物车内总价格
-    // getNum = (bookNum) => {
-    //     //获取新的priceSum
-    //     //更新priceSum
-    //     console.log("refresh")
-    //     console.log(bookNum)
-    //     // this.setState({num:bookNum})
-    //     this.setState({ sum: listBrand[this.state.idNum - 1].price * bookNum })
-    // }
-    //
 
     componentDidMount(){
+        console.log("hello")
+        axios.post(`/api/car/cartList`, {
+            userId:cookie.load("userId")
+        }).then(
+            response => {
+                console.log("请求成功", response.data);
+                this.setState({books:response.data})
+                // createOrderItem(response.data.bookInCarList,this.state.orderId)
+            },
+            error => { console.log("请求失败", error); }
+        )
+    }
 
+    refresh(list){
+        this.setState()
     }
 
     callback=(orderId)=>{
@@ -44,34 +42,37 @@ export default class ShoppingCarView extends React.Component {
     }
 
     createOrder(){
-        const userAccount = cookie.load("userAccount")
-        console.log(userAccount)
+        const userId = cookie.load("userId")
+        console.log(userId)
         //创建 order 并获得order的id
         const orderId = 0
-        createOrder(userAccount,this.callback)
-        axios.post(`/api/car/cartList`, {
-        }).then(
-            response => {
-                console.log("请求成功", response.data);
-                createOrderItem(response.data.bookInCarList,this.state.orderId)
-            },
-            error => { console.log("请求失败", error); }
-        )
+        orderService(userId,this.callback)
+        // axios.post(`/api/car/cartList`, {
+        //     userId:userId
+        // }).then(
+        //     response => {
+        //         console.log("请求成功", response.data);
+        //         // history.push("/userCenter")
+        //     },
+        //     error => { console.log("请求失败", error); }
+        // )
         // createOrderItem(this.state.books)
+        this.componentDidMount()
     }
     searchBooks = (bookName)=>{
         console.log("bookView"+bookName);
     }
 
     render() {
-        this.componentDidMount()
+        // this.componentDidMount()
         const bookList = this.state.books;
         console.log(this.props)
         console.log(bookList)
         // this.setState({sum:listBrand[bookId-1].price})
         return (
             <div>
-                <CarHead />
+                {/*<CarHead />*/}
+                <HeaderL/>
                 <div id="chekoutBody">
                     <div className="checkoutProduct t">
                         <div className="checkoutProductInfo c">
@@ -115,7 +116,7 @@ export default class ShoppingCarView extends React.Component {
                                         </li>
                                     </ul>
                                     <div className="rightSubmit r">
-                                        <Link to="/car" onClick={this.createOrder.bind(this)}>
+                                        <Link to="/userCenter" onClick={this.createOrder.bind(this)}>
                                         立即结算
                                         </Link>
 
