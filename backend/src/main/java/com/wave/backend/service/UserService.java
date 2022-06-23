@@ -1,12 +1,10 @@
 package com.wave.backend.service;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wave.backend.model.domain.User;
-import com.wave.backend.model.domain.response.UserLoginResponse;
-import com.wave.backend.model.domain.response.UserRegisterResponse;
+import com.wave.backend.model.User;
+import com.wave.backend.model.response.UserLoginResponse;
+import com.wave.backend.model.response.UserRegisterResponse;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
 * @author 16541

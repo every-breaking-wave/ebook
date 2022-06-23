@@ -6,6 +6,8 @@ public interface UserConstant {
      */
     String USER_LOGIN_STATE = "userLoginState";
 
+    String USER_ID = "userId";
+
     /**
      * 权限： 默认权限：0， 管理员权限： 1
      */
@@ -13,4 +15,5 @@ public interface UserConstant {
     int ADMIN_ROLE = 1;
 
     int NOT_LOGIN = 3;
+
 }

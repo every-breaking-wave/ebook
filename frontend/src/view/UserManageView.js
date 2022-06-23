@@ -12,26 +12,38 @@ export default class UserManageView extends Component {
     constructor(props) {
         super(props);
         this.state = {sum: 0}
-        this.state = {userList: [], ban: 0}
+        this.state = {userList: [], userState: []}
     }
 
     // TODO: 页面不刷新
-    handleBan(event, userId){
-        banUser(userId)
-        this.setState({ban:userId})
-        this.forceUpdate()
+    handleBan(event, user, index){
+        console.log(this.state.userState)
+        let state = this.state.userState
+        banUser(user.id)
+        this.setState({userState :user.id})
+        let newState = this.state.userState
+        console.log(index)
+        newState[index] = !newState[index];
+        this.setState({userState: newState})
+        console.log(this.state.userState)
     }
 
 
-
-    componentDidMount() {
+    componentWillMount() {
         console.log(this.state.list)
         axios.post(`/api/admin/get-all-user`).then(
             response => {
                 console.log("请求成功", response.data);
                 if (response.data != null) {
+                    let newState = this.state.userState
                     // history.push({pathname: '/default'})
                     this.setState({userList: response.data})
+                    console.log(this.state.userList)
+                    this.state.userList.map((item, index)=>{
+                        newState[index] =  item.userStatus
+                        this.setState({userState : newState})
+                    })
+                    console.log(newState)
                 }
             },
             error => {
@@ -44,6 +56,8 @@ export default class UserManageView extends Component {
     render() {
         // this.componentDidMount()
         const userList = this.state.userList || []
+        const states = this.state.userState || []
+        console.log(states)
         // const bookList = cookie.loadAll().list;
         // console.log(this.props)
         console.log(userList)
@@ -66,19 +80,19 @@ export default class UserManageView extends Component {
                                             </Typography.Text>
                                             <div style={{float: "right"}}>
                                                 {
-                                                    item.userStatus ?
+                                                    states[index] == true?
                                                         <Button
                                                         size="small"
                                                         type="primary"
                                                         color= "red"
-                                                        onClick={(event) => this.handleBan(event, item.id)}
+                                                        onClick={(event) => this.handleBan(event,item, index)}
                                                          >
                                                          解除禁用
                                                          </Button> :
                                                         <Button
                                                             size="small"
                                                             type="primary"
-                                                            onClick={(event) => this.handleBan(event, item.id)}
+                                                            onClick={(event) => this.handleBan(event, item, index)}
                                                         >
                                                             禁用
                                                         </Button>
@@ -99,7 +113,7 @@ export default class UserManageView extends Component {
                                             {item.createTime}
                                         </Descriptions.Item>
                                         <Descriptions.Item label="用户状态">
-                                            {item.userStatus ? "已禁用" : "正常"}
+                                            {states[index] ? "已禁用" : "正常"}
                                         </Descriptions.Item>
 
                                     </Descriptions>

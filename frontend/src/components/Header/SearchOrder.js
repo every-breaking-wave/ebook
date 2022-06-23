@@ -6,6 +6,7 @@ import {Input, message} from "antd";
 import Pubsub from 'pubsub-js'
 import axios from 'axios';
 import {history} from "../../utils/history";
+import {getRole} from "../../services/userService";
 const {SearchInput} = Input
 
 
@@ -19,38 +20,38 @@ export default class SearchOrder extends Component {
     handleSearch(){
         const keyword = this.keyWordElement.value
         console.log("keyword is " + keyword)
-        Pubsub.publish('searchBook',{isFirst:false,isLoading:true})
-        if(keyword == ""){
-            axios.post(`/api/order/search/default`).then(
-                response => {
-                    console.log("请求成功", response.data);
-                    if(response.data != null){
-                        Pubsub.publish('searchOrder',{isLoading:false, bookList: response.data})
-                        message.info("ok")
-                        history.push({ pathname: '/default' })
+        Pubsub.publish('searchOrder',{isFirst:false,isLoading:true})
+            if(keyword == ""){
+                axios.post(`/api/order/search/default`).then(
+                    response => {
+                        console.log("请求成功", response.data);
+                        if(response.data != null){
+                            Pubsub.publish('searchOrder',{isLoading:false, orderList: response.data})
+                            message.info("ok")
+                            history.push({ pathname: '/orderManage/default' })
+                        }
+                    },
+                    error => {
+                        Pubsub.publish('searchOrder',{err: error.message})
                     }
-                },
-                error => {
-                    Pubsub.publish('searchBook',{err: error.message})
-                }
-            )
-            // message.error("请输入搜索关键字")
-        }
-        else{
-            axios.post(`/api/order/search/${keyword}`).then(
-                response => {
-                    console.log("请求成功", response.data);
-                    if(response.data.bookList != null){
-                        Pubsub.publish('searchOrder',{isLoading:false, bookList: response.data.bookList})
-                        message.info("ok")
-                        history.push(`/${keyword}`)
+                )
+                // message.error("请输入搜索关键字")
+            }
+            else{
+                axios.post(`/api/order/search/${keyword}`).then(
+                    response => {
+                        console.log("请求成功", response.data);
+                        if(response.data != null){
+                            Pubsub.publish('searchOrder',{isLoading:false, orderList: response.data})
+                            message.info("ok")
+                            history.push(`/orderManage/${keyword}`)
+                        }
+                    },
+                    error => {
+                        Pubsub.publish('searchOrder',{err: error.message})
                     }
-                },
-                error => {
-                    Pubsub.publish('searchOrder',{err: error.message})
-                }
-            )
-        }
+                )
+            }
     }
 
     render() {
@@ -70,7 +71,7 @@ export default class SearchOrder extends Component {
                             <div className="searchBoxMain">
                                 <div className="searchBoxInput l">
                                     <input ref={c => this.keyWordElement = c} type="text"
-                                           placeholder="搜索你想要的书目"/>&nbsp;
+                                           placeholder="搜索你想要的订单"/>&nbsp;
                                 </div>
                                 <a onClick={this.handleSearch} className="searchButton">搜索</a>
                             </div>

@@ -1,10 +1,11 @@
-package com.wave.backend.model.domain;
+package com.wave.backend.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
+
 import lombok.Data;
 
 /**
@@ -52,6 +53,7 @@ public class CarItem implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
 
     @Override
     public boolean equals(Object that) {

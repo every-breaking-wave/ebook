@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wave.backend.mapper.CaritemMapper">
 
-    <resultMap id="BaseResultMap" type="com.wave.backend.model.domain.CarItem">
+    <resultMap id="BaseResultMap" type="com.wave.backend.model.CarItem">
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="carId" column="carId" jdbcType="INTEGER"/>
         <result property="countInCar" column="countInCar" jdbcType="INTEGER"/>

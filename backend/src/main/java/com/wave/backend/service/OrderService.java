@@ -2,11 +2,10 @@ package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import com.wave.backend.model.domain.Order;
-import com.wave.backend.model.domain.OrderItem;
-import com.wave.backend.model.domain.response.CreateOrderResponse;
+import com.wave.backend.model.Order;
+import com.wave.backend.model.response.CreateOrderResponse;
 
-import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -22,4 +21,13 @@ public interface OrderService extends IService<Order> {
     boolean delOrder(Integer userId);
 
     List<Order> getOrdersById(Integer userId);
+
+    List<Order> getFullOrders();
+
+    List<Order> getUserFullOrders(Integer userId);
+
+    List<Order> searchOrders(String keyword, HttpServletRequest request);
+
+    List<Order> searchUserOrders(String keyword, HttpServletRequest request);
+
 }

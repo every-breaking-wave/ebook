@@ -1,10 +1,12 @@
-package com.wave.backend.model.domain;
+package com.wave.backend.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+import com.github.dreamyoung.mprelation.*;
 import lombok.Data;
 
 /**
@@ -39,6 +41,13 @@ public class OrderItem implements Serializable {
      *
      */
     private BigDecimal price;
+
+    //一对一
+    @TableField(exist = false)
+    @OneToOne //一对多默认为延迟加载,即@Lazy/@Lazy(true)/或此时不标注
+    @JoinColumn(name="bookId",referencedColumnName = "id")//@TableId与一方相关属性中@TableField名称保持一致时@JoinColumn可省略
+    @Lazy(false)
+    private Book book;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

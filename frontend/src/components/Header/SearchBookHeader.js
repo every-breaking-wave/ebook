@@ -4,8 +4,9 @@ import '../../css/base.css'
 import {getRole, logout} from "../../services/userService";
 import TopBar from "./TopBar";
 import SearchBook from "./SearchBook";
+import SearchOrder from "./SearchOrder";
 
-class SearchOrderHeader extends React.Component {
+class SearchBookHeader extends React.Component {
 
     constructor(props) {
         super(props);
@@ -39,8 +40,7 @@ class SearchOrderHeader extends React.Component {
     }
 }
 
-export default SearchOrderHeader
-
+export default SearchBookHeader
 
 
 

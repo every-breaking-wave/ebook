@@ -6,11 +6,11 @@ import com.wave.backend.constant.UserConstant;
 import com.wave.backend.constant.UserServiceStatus;
 import com.wave.backend.mapper.AdminMapper;
 import com.wave.backend.mapper.CarMapper;
-import com.wave.backend.model.domain.Admin;
-import com.wave.backend.model.domain.Car;
-import com.wave.backend.model.domain.User;
-import com.wave.backend.model.domain.response.UserLoginResponse;
-import com.wave.backend.model.domain.response.UserRegisterResponse;
+import com.wave.backend.model.Admin;
+import com.wave.backend.model.Car;
+import com.wave.backend.model.User;
+import com.wave.backend.model.response.UserLoginResponse;
+import com.wave.backend.model.response.UserRegisterResponse;
 import com.wave.backend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -149,19 +149,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         // 3.用户脱敏
-//        User safeUser = getSaveUser(user);
-//
-//        doctorService.addDoctor(user);
 
         // 4.记录脱敏后的用户登录状态, 现在未进行脱敏处理，按用户role分类记录用户态
         if (user != null) {
-            request.getSession().setAttribute(UserConstant.USER_LOGIN_STATE, user);
+            request.getSession().setAttribute(UserConstant.USER_LOGIN_STATE, user.getUserRole());
+            request.getSession().setAttribute(UserConstant.USER_ID, user.getId());
             userLoginResponse.setId(user.getId());
             userLoginResponse.setUserAccount(user.getUserAccount());
             userLoginResponse.setRole(UserConstant.DEFAULT_ROLE);
         }
         else {
-            request.getSession().setAttribute(UserConstant.USER_LOGIN_STATE, admin);
+            request.getSession().setAttribute(UserConstant.USER_LOGIN_STATE, admin.getUserRole());
             userLoginResponse.setId(admin.getId());
             userLoginResponse.setUserAccount(admin.getUserAccount());
             userLoginResponse.setRole(UserConstant.ADMIN_ROLE);

@@ -6,12 +6,7 @@ import {getRole, logout} from "../../services/userService";
 import axios from "axios";
 import {message, Tooltip} from "antd";
 import Search from "./Search";
-import {history} from "../../utils/history";
-import {Link, useHistory} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDisplay, faUser, faBook, faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import TopBar from "./TopBar";
-// import {ExportOutlined, LinkOutlined, WechatOutlined} from "@ant-design/icons"
 
 
 class HeaderL extends React.Component {

@@ -4,28 +4,23 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wave.backend.mapper.BookMapper;
 import com.wave.backend.mapper.CarMapper;
 import com.wave.backend.mapper.CaritemMapper;
-import com.wave.backend.model.domain.Book;
-import com.wave.backend.model.domain.BookInCar;
-import com.wave.backend.model.domain.Car;
-import com.wave.backend.model.domain.CarItem;
-import com.wave.backend.model.domain.request.AddCartRequest;
-import com.wave.backend.model.domain.request.CarListRequest;
-import com.wave.backend.model.domain.request.CreateOrderRequest;
-import com.wave.backend.model.domain.response.CarListResponse;
+import com.wave.backend.model.Book;
+import com.wave.backend.model.Car;
+import com.wave.backend.model.CarItem;
+import com.wave.backend.model.request.AddCartRequest;
+import com.wave.backend.model.request.CarListRequest;
+import com.wave.backend.model.request.CreateOrderRequest;
+import com.wave.backend.model.response.CarListResponse;
 import com.wave.backend.service.BookService;
-import com.wave.backend.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.*;
 
 @RestController
@@ -40,12 +35,6 @@ public class ProductCartController {
     private  CarMapper carMapper;
     @Resource
     private BookMapper bookMapper;
-
-    //购物车在Cookie中的name
-    private String productCart = "bookCar";
-
-    //url encoder使用的字符集
-    private String enc = "utf-8";
 
     @RequestMapping("/getId")
     public Integer getId(@RequestBody CreateOrderRequest createOrderRequest){

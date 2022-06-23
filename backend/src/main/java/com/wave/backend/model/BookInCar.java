@@ -1,4 +1,4 @@
-package com.wave.backend.model.domain;
+package com.wave.backend.model;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;

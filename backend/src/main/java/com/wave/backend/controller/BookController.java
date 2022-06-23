@@ -1,8 +1,7 @@
 package com.wave.backend.controller;
 
-import com.wave.backend.model.domain.Book;
-import com.wave.backend.model.domain.response.GetBookResponse;
-import com.wave.backend.model.domain.response.SearchBookResponse;
+import com.wave.backend.model.response.GetBookResponse;
+import com.wave.backend.model.response.SearchBookResponse;
 import com.wave.backend.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

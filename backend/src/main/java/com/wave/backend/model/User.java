@@ -1,11 +1,16 @@
-package com.wave.backend.model.domain;
+package com.wave.backend.model;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.github.dreamyoung.mprelation.CascadeType;
+import com.github.dreamyoung.mprelation.JoinColumn;
+import com.github.dreamyoung.mprelation.Lazy;
+import com.github.dreamyoung.mprelation.OneToMany;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * 用户表
@@ -79,6 +84,13 @@ public class User implements Serializable {
      */
     private byte[] gender;
 
+
+    //一对多
+    @TableField(exist = false)
+    @OneToMany(cascade = CascadeType.ALL) //一对多默认为延迟加载,即@Lazy/@Lazy(true)/或此时不标注
+    @JoinColumn(name="id",referencedColumnName = "userId")//@TableId与一方相关属性中@TableField名称保持一致时@JoinColumn可省略
+    private Set<Order> orders;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -93,7 +105,7 @@ public class User implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        User other = (com.wave.backend.model.domain.User) that;
+        User other = (User) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
                 && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
                 && (this.getUserAccount() == null ? other.getUserAccount() == null : this.getUserAccount().equals(other.getUserAccount()))

@@ -2,15 +2,11 @@ package com.wave.backend.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.wave.backend.constant.UserConstant;
-import com.wave.backend.model.domain.Admin;
-import com.wave.backend.model.domain.DetailOrderItem;
-import com.wave.backend.model.domain.User;
-import com.wave.backend.model.domain.request.UserLoginRequest;
-import com.wave.backend.model.domain.request.UserRegisterRequest;
-import com.wave.backend.model.domain.response.UserLoginResponse;
-import com.wave.backend.model.domain.response.UserRegisterResponse;
-import com.wave.backend.service.OrderItemService;
+import com.wave.backend.model.User;
+import com.wave.backend.model.request.UserLoginRequest;
+import com.wave.backend.model.request.UserRegisterRequest;
+import com.wave.backend.model.response.UserLoginResponse;
+import com.wave.backend.model.response.UserRegisterResponse;
 import com.wave.backend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 //import org.apache.commons.lang3.StringUtils;
@@ -36,8 +32,6 @@ import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
 public class UserController {
     @Resource
     private UserService userService;
-    @Resource
-    private OrderItemService orderItemService;
 
     @PostMapping("/register")
     public UserRegisterResponse userRegister(@RequestBody UserRegisterRequest userRegisterRequest){
@@ -99,9 +93,9 @@ public class UserController {
 
     @PostMapping("/role")
     public boolean isAdmin(HttpServletRequest request){
-        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
-        Admin user = (Admin) userObj;
-        return user != null && user.getUserRole() == ADMIN_ROLE; // 返回空数组
+        Object obj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        Integer role = (Integer) obj;
+        return role == ADMIN_ROLE; // 返回空数组
     }
 
     @PostMapping("/logout")
@@ -110,10 +104,7 @@ public class UserController {
         return result;
     }
 
-    @PostMapping("/get-user-full-order/{userId}")
-    public List<List<DetailOrderItem>>getUserFullOrderItems(@PathVariable Integer userId, HttpServletRequest request){
-        return orderItemService.getUserFullOrderItems(userId);
-    }
+
 
 
 

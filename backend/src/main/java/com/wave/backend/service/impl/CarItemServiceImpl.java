@@ -1,7 +1,7 @@
 package com.wave.backend.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wave.backend.model.domain.CarItem;
+import com.wave.backend.model.CarItem;
 import com.wave.backend.mapper.CaritemMapper;
 import com.wave.backend.service.CarItemService;
 import org.springframework.stereotype.Service;

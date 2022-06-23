@@ -14,6 +14,7 @@ import OrderManageView from "./view/OrderManageView";
 import UserView from "./view/UserView"
 import BookDetail from "./components/BookDetail/BookDetail";
 import BookManageView from "./view/BookManageView";
+import StatisticView from "./view/StatisticView";
 
 
 
@@ -41,8 +42,11 @@ class BasicRoute extends React.Component {
                         <PrivateRoute  path="/userManage" component={UserManagerView} />
                         <PrivateRoute  path="/orderManage/:keyValue" component={OrderManageView} />
                         <PrivateRoute  path="/userCenter" component={UserView} />
+                        <PrivateRoute  path="/statistic" component={StatisticView} />
                         <PrivateRoute  path="/:keyValue" component={HomeView} />
                         <Redirect from="/bookManage/*" to="/bookManage/default" />
+                        <Redirect from="/orderManage/*" to="/orderManage/default" />
+                        <Redirect from="/userCenter/*" to="/userCenter/default" />
                         <Redirect from="/*" to="/default" />
                     </Switch>
                 </BrowserRouter>

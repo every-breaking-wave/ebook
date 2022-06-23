@@ -2,11 +2,11 @@ package com.wave.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.dreamyoung.mprelation.AutoMapper;
 import com.wave.backend.mapper.CaritemMapper;
-import com.wave.backend.model.domain.Car;
+import com.wave.backend.model.Car;
 import com.wave.backend.mapper.CarMapper;
-import com.wave.backend.model.domain.CarItem;
-import com.wave.backend.model.domain.response.CarListResponse;
+import com.wave.backend.model.CarItem;
 import com.wave.backend.service.CarService;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +26,26 @@ implements CarService{
     private CarMapper carMapper;
     @Resource
     private CaritemMapper caritemMapper;
+    @Resource
+    private AutoMapper autoMapper;
+
+//    @Override
+//    public List<CarItem> getCarList(Integer userId) {
+//        QueryWrapper<CarItem> queryWrapper = new QueryWrapper<>();
+//        QueryWrapper<Car> queryWrapper1 = new QueryWrapper<>();
+//        queryWrapper1.eq("userId",userId);
+//        queryWrapper.eq("carId",carMapper.selectOne(queryWrapper1).getId());
+//        List<CarItem> cartItems = new ArrayList<>();
+//        return  caritemMapper.selectList(queryWrapper);
+//    }
 
     @Override
-    public List<CarItem> getCarList(Integer userId) {
-        QueryWrapper<CarItem> queryWrapper = new QueryWrapper<>();
+    public Car getCar(Integer userId) {
         QueryWrapper<Car> queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.eq("userId",userId);
-        queryWrapper.eq("carId",carMapper.selectOne(queryWrapper1).getId());
-        List<CarItem> cartItems = new ArrayList<>();
-        return  caritemMapper.selectList(queryWrapper);
+        Car car = carMapper.selectOne(queryWrapper1);
+        autoMapper.mapperEntity(car);
+        return  car;
     }
 
     @Override

@@ -5,7 +5,7 @@ import {getRole, logout} from "../../services/userService";
 import {message, Tooltip} from "antd";
 import {Link, useHistory} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDisplay, faUser, faBook, faUserCircle} from "@fortawesome/free-solid-svg-icons";
+import {faDisplay, faUser, faBook, faUserCircle,faDatabase} from "@fortawesome/free-solid-svg-icons";
 
 export default class TopBar extends React.Component{
 
@@ -38,55 +38,11 @@ export default class TopBar extends React.Component{
 				<div id="topContent" className="c">
 		      <span className="topContentLeft l">
                   <Link to={'/'} className="a1">欢迎来到EBook</Link>
-                  <a href='/login'>请登录</a>
-                  <a href="">免费注册</a>
 		      </span>
 					<span className="topContentRight r"><span>
                         {this.state.role == false ? (
 							<Tooltip title="个人主页">
-								<Link to={"/userCenter"}>
-									<FontAwesomeIcon
-										icon={faUser}
-										// onClick={handleClick}
-										fontSize={22}
-										color="white"
-										style={{cursor: "pointer"}}
-									/>
-								</Link>
-
-							</Tooltip>
-						) : (
-							<Tooltip title="管理员主页">
-								<Link to={"/orderManage"}>
-									<FontAwesomeIcon
-										icon={faDisplay}
-										fontSize={22}
-										color="white"
-										style={{cursor: "pointer"}}
-									/>
-								</Link>
-							</Tooltip>
-						)}
-						{this.state.role == false ? (
-							<span></span>
-						) : (
-							<Tooltip title="书籍管理">
-								<Link to={"/bookManage/default"}>
-									<FontAwesomeIcon
-										icon={faBook}
-										fontSize={22}
-										color="white"
-										style={{cursor: "pointer"}}
-									/>
-								</Link>
-
-							</Tooltip>
-						)}
-						{this.state.role == false ? (
-							<span></span>
-						) : (
-							<Tooltip title="用户管理">
-								<Link to={"/userManage"}>
+								<Link to={"/userCenter/default"}>
 									<FontAwesomeIcon
 										icon={faUser}
 										fontSize={22}
@@ -94,8 +50,75 @@ export default class TopBar extends React.Component{
 										style={{cursor: "pointer"}}
 									/>
 								</Link>
+							</Tooltip>
+						) : (
+							<>
+								<Tooltip title="管理员主页">
+									<Link to={"/orderManage/default"}>
+										<FontAwesomeIcon
+											icon={faDisplay}
+											fontSize={22}
+											color="white"
+											style={{cursor: "pointer"}}
+										/>
+									</Link>
+								</Tooltip>
+								<span></span>
+							</>
 
-							</Tooltip>)}
+						)}
+						{this.state.role == false ? (
+							<></>
+						) : (
+							<>
+								<Tooltip title="统计">
+									<Link to={"/statistic"}>
+										<FontAwesomeIcon
+											icon={faDatabase}
+											fontSize={22}
+											color="white"
+											style={{cursor: "pointer"}}
+										/>
+									</Link>
+								</Tooltip>
+								<span></span>
+							</>
+
+						)}
+						{this.state.role == false ? (
+						<></>
+						) : (
+							<>
+								<Tooltip title="书籍管理">
+									<Link to={"/bookManage/default"}>
+										<FontAwesomeIcon
+											icon={faBook}
+											fontSize={22}
+											color="white"
+											style={{cursor: "pointer"}}
+										/>
+									</Link>
+								</Tooltip>
+								<span></span>
+							</>
+
+						)}
+						{this.state.role == false ? (
+							<></>
+						) : (
+							<>
+								<Tooltip title="用户管理">
+									<Link to={"/userManage"}>
+										<FontAwesomeIcon
+											icon={faUser}
+											fontSize={22}
+											color="white"
+											style={{cursor: "pointer"}}
+										/>
+									</Link>
+								</Tooltip>
+							</>
+							)}
 						<span>
 				                <a onClick={logout} href="#">退出登录</a>
 			                </span>

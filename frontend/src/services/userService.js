@@ -98,7 +98,7 @@ export const banUser = async (userId) => {
 
         }
     )
-    return await res.json()
+    // return await res.json()
 }
 
 

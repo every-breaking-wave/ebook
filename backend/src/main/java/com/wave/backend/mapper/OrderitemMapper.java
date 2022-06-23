@@ -1,7 +1,7 @@
 package com.wave.backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.wave.backend.model.domain.OrderItem;
+import com.wave.backend.model.OrderItem;
 
 /**
 * @author Feng

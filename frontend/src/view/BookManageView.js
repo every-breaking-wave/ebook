@@ -101,18 +101,17 @@ export default class BookManageView extends React.Component {
         });
     };
 
-
-
     // 单条保存
     handleSave = (record, index) => {
         console.log(index)
         const {editArr, dataSource} = this.state;
 
         const newData = [...dataSource];
+         index = newData.findIndex((item) => item.id === index);
         // 用splice不改变原来的数组顺序
-        newData.splice(index-1, 1, {
+        newData.splice(index, 1, {
             ...record,
-            ...editArr[index-1],
+            ...editArr[index],
             edit: false,
         });
         this.setState({dataSource: newData});

@@ -1,8 +1,10 @@
 package com.wave.backend.controller;
 
 
-import com.wave.backend.model.domain.*;
-import com.wave.backend.model.domain.request.CreateOrderRequest;
+import com.wave.backend.model.Book;
+import com.wave.backend.model.Order;
+import com.wave.backend.model.User;
+import com.wave.backend.model.request.CreateOrderRequest;
 import com.wave.backend.service.AdminService;
 import com.wave.backend.service.OrderItemService;
 import com.wave.backend.service.OrderService;
@@ -71,9 +73,9 @@ public class AdminController {
     }
 
     @PostMapping("/get-full-order")
-    public List<List<DetailOrderItem>> getFullOrderItems(HttpServletRequest request){
+    public List<Order> getFullOrderItems(HttpServletRequest request){
         if(userController.isAdmin(request))
-            return orderItemService.getFullOrderItems();
+            return orderService.getFullOrders();
         return null;
     }
 

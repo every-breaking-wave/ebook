@@ -1,4 +1,4 @@
-package com.wave.backend.model.domain.request;
+package com.wave.backend.model.request;
 
 import lombok.Data;
 

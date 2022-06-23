@@ -1,8 +1,5 @@
 import React from 'react';
-import {Layout, message} from 'antd'
-import {withRouter} from "react-router-dom";
-import {BookCarousel} from "../components/BookCarousel";
-import {SearchBar} from "../components/SearchBar";
+import {Layout} from 'antd'
 import BookList from "../components/BookList";
 import HeaderL from "../components/Header/Header";
 import Footer from "../components/Footer";
@@ -10,13 +7,9 @@ import "../components/Brand.js"
 import '../css/list.css'
 import '../css/base.css'
 import '../css/home.css'
-import {listBrand} from "../components/Brand";
-import LeftNav from "../components/leftNav";
-import Search from "../components/Header/Search";
 import axios from "axios";
 import Pubsub from "pubsub-js";
 import {history} from "../utils/history";
-
 
 
 class HomeView extends React.Component {
@@ -24,8 +17,6 @@ class HomeView extends React.Component {
 
     constructor(props) {
         super(props);
-        // this.state = {list: listBrand}
-        // this.getSearchList = this.getSearchList.bind(this)
     }
 
     componentDidMount(){
@@ -61,20 +52,7 @@ class HomeView extends React.Component {
             )
         }
 
-        // let user = localStorage.getItem("user");
-        // this.setState({user:user});
     }
-
-    // search = (e) => {
-    //     this.setState({list: listBrand})
-    //     console.log(this.keyWordElement.value)
-    //     var arr = this.state.list.filter((item, index) => item.name.indexOf(this.keyWordElement.value) > -1);
-    //     this.setState(Object.assign({}, this.state, {
-    //         list: arr
-    //     }));
-    //     // this.forceUpdate();
-    //     console.log(this.state.list)
-    // };
 
     render() {
         // const {bookList, isFirst, isLoading,err} = this.state;

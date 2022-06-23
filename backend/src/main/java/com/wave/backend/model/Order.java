@@ -1,12 +1,17 @@
-package com.wave.backend.model.domain;
+package com.wave.backend.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.github.dreamyoung.mprelation.CascadeType;
+import com.github.dreamyoung.mprelation.JoinColumn;
+import com.github.dreamyoung.mprelation.Lazy;
+import com.github.dreamyoung.mprelation.OneToMany;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -33,6 +38,14 @@ public class Order implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    //一对多
+    @TableField(exist = false)
+    @OneToMany(cascade = CascadeType.ALL) //一对多默认为延迟加载,即@Lazy/@Lazy(true)/或此时不标注
+    @JoinColumn(name="id",referencedColumnName = "orderId")//@TableId与一方相关属性中@TableField名称保持一致时@JoinColumn可省略
+    @Lazy(false)
+    private List<OrderItem> orderItems;
+
 
     @Override
     public boolean equals(Object that) {

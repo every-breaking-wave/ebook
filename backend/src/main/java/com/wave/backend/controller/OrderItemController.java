@@ -3,17 +3,16 @@ package com.wave.backend.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wave.backend.mapper.OrderMapper;
 import com.wave.backend.mapper.OrderitemMapper;
-import com.wave.backend.model.domain.*;
-import com.wave.backend.model.domain.request.CreateOrderItemRequest;
-import com.wave.backend.model.domain.response.CarListResponse;
-import com.wave.backend.model.domain.response.CreateOrderItemResponse;
+import com.wave.backend.model.CarItem;
+import com.wave.backend.model.Order;
+import com.wave.backend.model.OrderItem;
+import com.wave.backend.model.request.CreateOrderItemRequest;
+import com.wave.backend.model.response.CreateOrderItemResponse;
 import com.wave.backend.service.OrderItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -52,11 +51,6 @@ public class OrderItemController {
 
         List<OrderItem> orderItems = orderitemMapper.selectList(queryWrapper);
         return orderItems;
-    }
-
-    @PostMapping("/search/{keyword}")
-    public List<List<DetailOrderItem>> searchOrderItems(@PathVariable String keyword){
-        return orderItemService.searchOrderItems(keyword);
     }
 
 

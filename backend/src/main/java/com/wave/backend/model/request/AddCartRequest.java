@@ -1,6 +1,5 @@
-package com.wave.backend.model.domain.request;
+package com.wave.backend.model.request;
 
-import com.wave.backend.model.domain.Book;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -1,9 +1,9 @@
 package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wave.backend.model.domain.Book;
-import com.wave.backend.model.domain.response.GetBookResponse;
-import com.wave.backend.model.domain.response.SearchBookResponse;
+import com.wave.backend.model.Book;
+import com.wave.backend.model.response.GetBookResponse;
+import com.wave.backend.model.response.SearchBookResponse;
 
 import javax.servlet.http.HttpServletRequest;
 

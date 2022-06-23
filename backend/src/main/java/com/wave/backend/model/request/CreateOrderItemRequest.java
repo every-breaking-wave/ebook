@@ -1,12 +1,9 @@
-package com.wave.backend.model.domain.request;
+package com.wave.backend.model.request;
 
-import com.wave.backend.model.domain.Book;
-import com.wave.backend.model.domain.BookInCar;
-import com.wave.backend.model.domain.CarItem;
+import com.wave.backend.model.CarItem;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Data

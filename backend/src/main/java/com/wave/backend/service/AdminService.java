@@ -1,7 +1,10 @@
 package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wave.backend.model.domain.*;
+import com.wave.backend.model.Admin;
+import com.wave.backend.model.Book;
+import com.wave.backend.model.Order;
+import com.wave.backend.model.User;
 
 import java.util.List;
 
@@ -11,15 +14,15 @@ import java.util.List;
 * @createDate 2022-05-09 17:46:17
 */
 public interface AdminService extends IService<Admin> {
-    public void addBook(Book book);
+    void addBook(Book book);
 
-    public void delBook(Book book);
+    void delBook(Book book);
 
-    public void updateBook(Book book);
+    void updateBook(Book book);
 
-    public boolean banUser(Integer userId);
+    boolean banUser(Integer userId);
 
-    public List<Order> getAllOrders();
+    List<Order> getAllOrders();
 
-    public List<User> getAllUser();
+    List<User> getAllUser();
 }

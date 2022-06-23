@@ -1,4 +1,4 @@
-package com.wave.backend.model.domain.response;
+package com.wave.backend.model.response;
 
 import com.wave.backend.constant.CreateOrderItemStatus;
 import com.wave.backend.constant.CreateOrderStatus;

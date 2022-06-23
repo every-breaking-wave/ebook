@@ -1,10 +1,7 @@
 package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wave.backend.model.domain.Car;
-import com.wave.backend.model.domain.CarItem;
-
-import java.util.List;
+import com.wave.backend.model.Car;
 
 /**
 * @author Feng
@@ -13,7 +10,7 @@ import java.util.List;
 */
 public interface CarService extends IService<Car> {
 
-    List<CarItem> getCarList(Integer userId);
+    Car getCar(Integer userId);
 
     boolean clearCar(Integer userId);
 }
