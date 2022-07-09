@@ -3,7 +3,6 @@ import {postRequest} from "../utils/ajax";
 import {history} from '../utils/history';
 import {message} from 'antd';
 import axios from "axios";
-import Pubsub from "pubsub-js";
 import cookie from "react-cookies";
 
 export const loginUser = () => {
@@ -11,7 +10,7 @@ export const loginUser = () => {
 }
 
 // 用户登录，保存cookie
-export const onLogin = (id) => {
+export const saveIdCookie = (id) => {
     cookie.save('userId', id, { path: '/' })
 }
 
@@ -70,22 +69,7 @@ export async function getRole ()  {
     return role
 }
 
-// export async function delUser (userId)  {
-//     await axios.post(`/api/admin/del-user`,
-//         {
-//             'userId' : userId
-//     }).then(
-//         response => {
-//             console.log("请求成功", response.data);
-//             if(response.data != null){
-//                 console.log(response.data)
-//             }
-//         },
-//         error => {
-//             error.isPrototypeOf(error.message)
-//         }
-//     )
-// }
+
 export const banUser = async (userId) => {
     const res = await fetch( "/api/admin/ban-user", {
         method: "POST",
@@ -101,4 +85,77 @@ export const banUser = async (userId) => {
     // return await res.json()
 }
 
+
+export  function login  (userAccount, userPassword, history) {
+    let flag = false
+     axios.post(`/api/user/login`, {
+        userAccount: userAccount,
+        userPassword: userPassword
+    }).then(
+        response => {
+            console.log("请求成功", response.data);
+            if (response.data.status == 'USER_ALL_OK') {
+                message.info("登陆成功，祝您购物愉快")
+                // let { history } = this.props
+                saveIdCookie(response.data.id)
+                flag = true
+                console.log(flag)
+                history.push({ pathname: '/default' })
+                // window.location.href = '/default'
+                // history.push({ pathname: '/default' })
+            }
+            else if("USER_NOT_EXIST" == response.data.status){
+                message.error("登录失败：用户不存在或密码错误")
+            }
+            else if("USER_BEEN_BANNED" == response.data.status){
+                message.error("登录失败：用户被禁用")
+            }
+            else if("USER_ACCOUNT_PASSWORD_NULL" == response.data.status){
+                message.error("登录失败：账号或密码不能为空")
+            }
+            else if("USER_ACCOUNT_ILLEGAL" == response.data.status){
+                message.error("登录失败：账号不能包含非法字符")
+            }
+        },
+        error => { console.log("请求失败", error);
+            return false
+        }
+    )
+}
+
+
+export const register = (userAccount, userPassword, repeatPassword, email) => {
+    axios.post(`/api/user/register`, {
+        userAccount: userAccount,
+        userPassword: userPassword,
+        repeatPassword: repeatPassword,
+        email: email
+    }).then(
+        response => {
+            console.log("请求成功", response.data);
+            if (response.data.status == 'USER_ALL_OK') {
+                message.info("注册成功，祝您购物愉快")
+                // let { history } = this.props
+                // history.push({ pathname: '/login' })
+                window.location.href = '/login'
+            }
+            else if("USER_ALREADY_EXIST" == response.data.status){
+                message.error("注册失败：用户已存在")
+            }
+            else if("USER_EMAIL_ILLEGAL" == response.data.status){
+                message.error("注册失败：邮箱格式错误")
+            }
+            else if("PASSWORD_NOT_MATE_REPEAT_PASSWORD" == response.data.status){
+                message.error("注册失败：两次输入的密码不匹配")
+            }
+            else if("USER_ACCOUNT_ILLEGAL" == response.data.status){
+                message.error("注册失败：账号不能包含非法字符")
+            }
+            else if("USER_ACCOUNT_PASSWORD_NULL" == response.data.status){
+                message.error("注册失败：账号、密码和邮箱不能为空")
+            }
+        },
+        error => { console.log("请求失败", error); }
+    )
+}
 

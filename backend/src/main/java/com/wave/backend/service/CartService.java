@@ -1,16 +1,16 @@
 package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wave.backend.model.Car;
+import com.wave.backend.model.Cart;
 
 /**
 * @author Feng
 * @description 针对表【car】的数据库操作Service
 * @createDate 2022-05-15 13:49:40
 */
-public interface CarService extends IService<Car> {
+public interface CartService extends IService<Cart> {
 
-    Car getCar(Integer userId);
+    Cart getCarByUserId(Integer userId);
 
-    boolean clearCar(Integer userId);
+    void clearCar(Integer userId);
 }

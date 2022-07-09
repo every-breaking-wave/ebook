@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  *
  * @TableName book
  */
-@TableName(value ="book")
+@TableName(value ="books")
 @Data
 public class Book implements Serializable {
     /**
@@ -45,7 +45,7 @@ public class Book implements Serializable {
     /**
      * 书本简介
      */
-    private String bookDesciption;
+    private String bookDescription;
 
     /**
      * 书本库存
@@ -82,7 +82,7 @@ public class Book implements Serializable {
                 && (this.getCategory() == null ? other.getCategory() == null : this.getCategory().equals(other.getCategory()))
                 && (this.getAuthor() == null ? other.getAuthor() == null : this.getAuthor().equals(other.getAuthor()))
                 && (this.getPrice() == null ? other.getPrice() == null : this.getPrice().equals(other.getPrice()))
-                && (this.getBookDesciption() == null ? other.getBookDesciption() == null : this.getBookDesciption().equals(other.getBookDesciption()))
+                && (this.getBookDescription() == null ? other.getBookDescription() == null : this.getBookDescription().equals(other.getBookDescription()))
                 && (this.getInventory() == null ? other.getInventory() == null : this.getInventory().equals(other.getInventory()))
                 && (this.getCover() == null ? other.getCover() == null : this.getCover().equals(other.getCover()))
                 && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()));
@@ -97,7 +97,7 @@ public class Book implements Serializable {
         result = prime * result + ((getCategory() == null) ? 0 : getCategory().hashCode());
         result = prime * result + ((getAuthor() == null) ? 0 : getAuthor().hashCode());
         result = prime * result + ((getPrice() == null) ? 0 : getPrice().hashCode());
-        result = prime * result + ((getBookDesciption() == null) ? 0 : getBookDesciption().hashCode());
+        result = prime * result + ((getBookDescription() == null) ? 0 : getBookDescription().hashCode());
         result = prime * result + ((getInventory() == null) ? 0 : getInventory().hashCode());
         result = prime * result + ((getCover() == null) ? 0 : getCover().hashCode());
         result = prime * result + ((getIsDeleted() == null) ? 0 : getIsDeleted().hashCode());
@@ -115,7 +115,7 @@ public class Book implements Serializable {
         sb.append(", category=").append(category);
         sb.append(", author=").append(author);
         sb.append(", price=").append(price);
-        sb.append(", bookDesciption=").append(bookDesciption);
+        sb.append(", bookDesciption=").append(bookDescription);
         sb.append(", inventory=").append(inventory);
         sb.append(", cover=").append(cover);
         sb.append(", isDeleted=").append(isDeleted);

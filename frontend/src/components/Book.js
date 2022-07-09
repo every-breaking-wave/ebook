@@ -31,7 +31,7 @@ export default class Book extends React.Component {
                 >
                     <Meta
                         title= {info.bookName}
-                        description={info.bookDescription}
+                        // description={info.bookDescription}
                         style={gridStyle}
                     />
                     <p

@@ -6,7 +6,6 @@ import com.wave.backend.model.Order;
 import com.wave.backend.model.User;
 import com.wave.backend.model.request.CreateOrderRequest;
 import com.wave.backend.service.AdminService;
-import com.wave.backend.service.OrderItemService;
 import com.wave.backend.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +23,6 @@ public class AdminController {
     private UserController userController;
     @Resource
     private AdminService adminService;
-    @Resource
-    private OrderItemService orderItemService;
     @Resource
     private OrderService orderService;
 

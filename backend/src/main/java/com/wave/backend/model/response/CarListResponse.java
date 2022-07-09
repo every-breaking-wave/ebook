@@ -1,6 +1,6 @@
 package com.wave.backend.model.response;
 
-import com.wave.backend.model.CarItem;
+import com.wave.backend.model.CartItem;
 import lombok.Data;
 
 import java.util.List;
@@ -8,5 +8,5 @@ import java.util.List;
 
 @Data
 public class CarListResponse {
-    List <CarItem> bookInCarList;
+    List <CartItem> bookInCarList;
 }

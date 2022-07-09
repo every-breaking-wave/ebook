@@ -7,7 +7,7 @@ import cookie from 'react-cookies'
 import {getBook} from "../../services/bookService";
 import Pubsub from "pubsub-js";
 import axios from "axios";
-import {onLogin} from "../../services/userService";
+import {saveIdCookie} from "../../services/userService";
 
 
 export default class BookDetail extends React.Component {
@@ -26,7 +26,7 @@ export default class BookDetail extends React.Component {
         const userId = cookie.load("userId")
         console.log(userId)
         // console.log(this.props.info.id)
-        axios.post(`/api/car/addCart`, {
+        axios.post(`/api/cart/addCart`, {
             bookId: this.props.info.id,
             count: this.state.num,
             userId: userId
@@ -44,24 +44,16 @@ export default class BookDetail extends React.Component {
 
     render() {
         const {info} = this.props;
-        // const {book} = this.state;
-        console.log(this.props);
-        console.log(this.state);
-        console.log({info})
-        // const {id} =  this.props.match.params;
         if (info == null) {
             return null;
         }
-        // getBooks(id,book);
 
         return (
             <div id="productDetail t" style={{background: "white"}}>
                 <div className="detailContent c">
                     <div className="productImg">
-                        {/*<div className="../assetsVideo"><div/>*/}
                         <img className="picture l" src={info.cover} style={{width: 300}}/>
                         <div className="bigImgVideo">
-                            {/*<img className="bpicture" src={`/assets/list/${info.src}`}/>*/}
                         </div>
                         <div className="square"></div>
 
@@ -70,7 +62,7 @@ export default class BookDetail extends React.Component {
                         <div className="productTitle l">
                             <div className="titleBox l">
                                 <h1>{info.bookName}</h1>
-                                <p className="p2">{info.bookDesciption}</p>
+                                <p className="p2">{info.bookDescription}</p>
                             </div>
                         </div>
                         <div className="productPrice l">
@@ -80,8 +72,8 @@ export default class BookDetail extends React.Component {
                         </div>
 
                         <div className="size l">
-                            <p className="actTitle l">状态</p>
-                            <p className="size1 l"><a href="#">{info.inventory > 0 ? ("有货") : ("缺货")}</a></p>
+                            <p className="actTitle l">库存</p>
+                            <p className="size1 l"><a href="#"> {info.inventory }</a></p>
                         </div>
                         <div>
 
@@ -95,14 +87,13 @@ export default class BookDetail extends React.Component {
 
                             <div className="addCar l" style={{marginTop: 20, marginLeft: 20}}>
 
-                                <Link to={`/car`}
-                                      // target="_blank"
+                                <a
                                       onClick={this.handleClick.bind(this)}
                                 >
                                     <p>
                                         加入购物车
                                     </p>
-                                </Link>
+                                </a>
                                 <div className="goCar l"></div>
                             </div>
 

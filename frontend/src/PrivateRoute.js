@@ -1,14 +1,14 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom'
-import * as userService from "./services/userService"
 import {message} from "antd";
 import './services/userService'
-import {loginUser} from "./services/userService";
+import {getRole, loginUser} from "./services/userService";
 
-export default class PrivateRoute extends React.Component{
+export default class PrivateRoute extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            role: null,
             isAuthed: false,
             hasAuthed: false,
         };
@@ -26,35 +26,45 @@ export default class PrivateRoute extends React.Component{
     };
 
 
-    componentDidMount() {
-        if(!loginUser())
+    async componentDidMount() {
+        if (!loginUser())
             message.info("你需要先进行登录")
-        // userService.checkSession(this.checkAuth);
+        let role = await getRole()
+        this.setState({role : role})
+        if (!role) {
+            console.log(role)
+            message.info("你没有此权限")
+        }
     }
 
 
-    render() {
+      render() {
 
 
+        const {component: Component, path = "/", exact = false, strict = false} = this.props;
 
-        const {component: Component, path="/",exact=false,strict=false} = this.props;
+        let role = this.state.role
 
-        // console.log(this.state.isAuthed);
-        //
-        // if (!this.state.hasAuthed) {
-        //     return null;
-        // }
+         console.log("role "+  role)
 
         return <Route path={path} exact={exact} strict={strict} render={props => (
-           loginUser() ? (
-                <Component {...props}/>
-            ) : (
+            !loginUser() ? (
                 <Redirect to={{
                     pathname: '/login',
                     state: {from: props.location},
                     message
                 }}/>
-            )
+            ) : role == false ? (
+
+                    <Redirect to={{
+                        pathname: '/',
+                        state: {from: props.location},
+                        message
+                    }}/>)
+                : (
+                    <Component {...props}/>
+                )
+
         )}/>
 
     }

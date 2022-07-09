@@ -1,13 +1,12 @@
 package com.wave.backend.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wave.backend.constant.UserConstant;
 import com.wave.backend.constant.UserServiceStatus;
-import com.wave.backend.mapper.AdminMapper;
-import com.wave.backend.mapper.CarMapper;
+import com.wave.backend.dao.AdminDao;
+import com.wave.backend.dao.CartDao;
+import com.wave.backend.dao.UserDao;
 import com.wave.backend.model.Admin;
-import com.wave.backend.model.Car;
+import com.wave.backend.model.Cart;
 import com.wave.backend.model.User;
 import com.wave.backend.model.response.UserLoginResponse;
 import com.wave.backend.model.response.UserRegisterResponse;
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import com.wave.backend.mapper.UserMapper;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,29 +31,48 @@ import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
 
 @Service
 @Slf4j
-public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-        implements UserService {
+public class UserServiceImpl implements UserService {
     /**
      * 盐值： 用于混淆密码
      */
     private static final String SALT = "wave";
 
     @Resource
-    private UserMapper userMapper;
+    private UserDao userDao;
+
     @Resource
-    private AdminMapper adminMapper;
+    private AdminDao adminDao;
+
     @Resource
-    private CarMapper carMapper;
+    private CartDao cartDao;
 
     @Override
-    public UserRegisterResponse userRegister(String userAccount, String userPassword) {
+    public UserRegisterResponse userRegister(String userAccount, String userPassword, String repeatPassword, String email) {
+
         log.info("Registering");
 
         UserRegisterResponse userRegisterResponse = new UserRegisterResponse();
 
         // 1.校验
-        if (StringUtils.isAnyBlank(userAccount, userPassword)) {
+        if (StringUtils.isAnyBlank(userAccount, userPassword, repeatPassword, email)) {
             userRegisterResponse.setStatus(UserServiceStatus.USER_ACCOUNT_PASSWORD_NULL);
+            return userRegisterResponse;
+        }
+
+        // 两个密码是否匹配
+        if (!userPassword.equals(repeatPassword)) {
+            userRegisterResponse.setStatus(UserServiceStatus.PASSWORD_NOT_MATE_REPEAT_PASSWORD);
+            return userRegisterResponse;
+        }
+
+        // 判断邮箱格式
+        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regEx1);
+        m = p.matcher(email);
+        if (!m.matches()) {
+            userRegisterResponse.setStatus(UserServiceStatus.USER_EMAIL_ILLEGAL);
             return userRegisterResponse;
         }
 
@@ -73,10 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return userRegisterResponse;
         }
 
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userAccount", userAccount);
-        long count = userMapper.selectCount(queryWrapper);
-        if (count > 0) {
+        if (userDao.getCount(userAccount) > 0) {
             userRegisterResponse.setStatus(UserServiceStatus.USER_ALREADY_EXIST);
             return userRegisterResponse;
         }
@@ -85,15 +99,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User user = new User();
         user.setUserAccount(userAccount);
         user.setUserPassword(encryptPassword);
-        int saveResult = userMapper.insert(user);
+        user.setEmail(email);
+        int saveResult = userDao.saveOne(user);
         if (saveResult == 0) {
             userRegisterResponse.setStatus(UserServiceStatus.USER_UNKNOWN_ERROR);
             return userRegisterResponse;
         }
         // 初始化购物车
-        Car car = new Car();
-        car.setUserId(user.getId());
-        carMapper.insert(car);
+        Cart cart = new Cart();
+        cart.setUserId(user.getId());
+        cartDao.saveOne(cart);
 
         userRegisterResponse.setStatus(UserServiceStatus.USER_ALL_OK);
         userRegisterResponse.setId(0L);
@@ -125,14 +140,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
         // 查询用户是否存在并判断role
 
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        QueryWrapper<Admin> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper.eq("userAccount", userAccount);
-        queryWrapper.eq("userPassword", encryptPassword);
-        queryWrapper1.eq("userAccount", userAccount);
-        queryWrapper1.eq("userPassword", encryptPassword);
-        User user = userMapper.selectOne(queryWrapper);
-        Admin admin = adminMapper.selectOne(queryWrapper1);
+        User user = userDao.findByAccountAndPassword(userAccount,encryptPassword);
+        Admin admin = adminDao.findByAccountAndPassword(userAccount, encryptPassword);
        
         // 用户不存在
         if (user == null && admin == null) {
@@ -174,13 +183,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public User getSaveUser(User originUser) {
         User safeUser = new User();
         safeUser.setId(0);
-        safeUser.setUsername(originUser.getUsername());
+        safeUser.setUserName(originUser.getUserName());
         safeUser.setUserAccount(originUser.getUserAccount());
         safeUser.setAvatarUrl(originUser.getAvatarUrl());
         safeUser.setGender(originUser.getGender());
         safeUser.setEmail(originUser.getEmail());
         safeUser.setUserStatus(originUser.getUserStatus());
-        safeUser.setPhoneNumber(originUser.getPhoneNumber());
         safeUser.setCreateTime(originUser.getCreateTime());
         safeUser.setIsDelete(0);
         safeUser.setUserRole(originUser.getUserRole());

@@ -7,34 +7,45 @@ import cookie from "react-cookies";
 import {orderService, createOrderItem} from "../services/orderService";
 import "../services/orderService"
 import axios from "axios";
-import HeaderL from "../components/Header/Header";
+import TopBar from "../components/Header/TopBar";
+import Footer from "../components/Footer";
 
 export default class ShoppingCarView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { books:[], orderId:0 }
+        this.state = { books:[], orderId:0 , sum : 0}
         // this.setState({ books: listBrand })
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.calculateSum = this.calculateSum.bind(this)
     }
 
     componentDidMount(){
-        console.log("hello")
-        axios.post(`/api/car/cartList`, {
+        axios.post(`/api/cart/cartList`, {
             userId:cookie.load("userId")
         }).then(
             response => {
                 console.log("请求成功", response.data);
                 this.setState({books:response.data})
-                // createOrderItem(response.data.bookInCarList,this.state.orderId)
+                this.calculateSum(response.data)
+                console.log(this.state.sum)
             },
             error => { console.log("请求失败", error); }
         )
     }
 
-    refresh(list){
-        this.setState()
+    calculateSum(books){
+        let sum = 0
+        console.log(books.bookInCarList)
+        console.log(books.length)
+        for (let i = 0; i <  books.bookInCarList.length; i++) {
+            sum += books.bookInCarList[i].book.price * books.bookInCarList[i].number
+        }
+        sum =  sum.toFixed(2)
+        console.log(sum)
+        this.setState({sum : sum})
     }
+
 
     callback=(orderId)=>{
        this.setState({orderId:orderId})
@@ -47,16 +58,6 @@ export default class ShoppingCarView extends React.Component {
         //创建 order 并获得order的id
         const orderId = 0
         orderService(userId,this.callback)
-        // axios.post(`/api/car/cartList`, {
-        //     userId:userId
-        // }).then(
-        //     response => {
-        //         console.log("请求成功", response.data);
-        //         // history.push("/userCenter")
-        //     },
-        //     error => { console.log("请求失败", error); }
-        // )
-        // createOrderItem(this.state.books)
         this.componentDidMount()
     }
     searchBooks = (bookName)=>{
@@ -64,20 +65,18 @@ export default class ShoppingCarView extends React.Component {
     }
 
     render() {
-        // this.componentDidMount()
         const bookList = this.state.books;
         console.log(this.props)
         console.log(bookList)
-        // this.setState({sum:listBrand[bookId-1].price})
         return (
             <div>
                 {/*<CarHead />*/}
-                <HeaderL/>
+                <TopBar/>
                 <div id="chekoutBody">
                     <div className="checkoutProduct t">
                         <div className="checkoutProductInfo c">
                             <div className="checkoutTable">
-                                <input type={"checkbox"} className="checkBox checkIcon"></input>
+                                {/*<input ></input>*/}
                                 <ul className="checkoutTableHeader">
                                     <li>全选</li>
                                     <li>商品信息</li>
@@ -100,19 +99,12 @@ export default class ShoppingCarView extends React.Component {
                     <div id="checkSubmit" className="t">
                         <div className="checkSubmitInfo c">
                             <div className="checkSubmitInfoBooking">
-                                <div className="checkSubmitInfoLeft l">
-                                    <input type={"checkbox"} className="checkBox checkIcon l"></input>
-                                    <a className="allClick">全选</a>
-                                    <a className="allDelete">批量删除</a>
-                                    <div className="split"></div>
-                                    <a className="callService">联系客服</a>
-                                </div>
                                 <div className="checkSubmitInfoRight r">
                                     <ul>
                                         <li><span>已选{this.state.bookNum}件商品，合计<span className="pri" >￥{this.state.sum}</span></span></li>
                                         <li>
                                             <span>商品总额：<span className="pri" >￥{this.state.sum}</span></span>
-                                            <div className="rightSave"><i></i><span>共节省：￥0.00</span></div>
+                                            {/*<div className="rightSave"><i></i><span>共节省：￥0.00</span></div>*/}
                                         </li>
                                     </ul>
                                     <div className="rightSubmit r">
@@ -126,22 +118,7 @@ export default class ShoppingCarView extends React.Component {
                         </div>
                     </div>
 
-                    <div id="checkTab">
-                        <div className="checkTabInfo t">
-                            <div className="checkTabInfoContent c">
-                                <div className="checkTabHeader">猜你喜欢</div>
-                                <div className="checkTabInfoContentBody c">
-                                    <div className="longBox">
-                                    </div>
-                                </div>
-                                <div className="checkBtn">
-                                    <div className="controlLeft l"></div>
-                                    <div className="controlRight r"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <Footer/>
                 </div>
             </div>
         )

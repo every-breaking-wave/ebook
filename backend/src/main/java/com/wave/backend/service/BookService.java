@@ -6,6 +6,7 @@ import com.wave.backend.model.response.GetBookResponse;
 import com.wave.backend.model.response.SearchBookResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author Feng
@@ -16,7 +17,7 @@ public interface BookService extends IService<Book> {
 
     SearchBookResponse searchBook(String searchKey);
 
-    GetBookResponse getBook(Integer id);
+    Book getBook(Integer id);
 
-    GetBookResponse getBooks(Integer id, HttpServletRequest request);
+    List<Book> getBooks(Integer id, HttpServletRequest request);
 }

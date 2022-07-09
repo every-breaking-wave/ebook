@@ -3,8 +3,8 @@ import {message} from "antd";
 import cookie from "react-cookies";
 
 
-export const addCar = (bookId)=>{
-    axios.post(`/api/car/addCart`, {
+export const addCart = (bookId)=>{
+    axios.post(`/api/cart/addCart`, {
         bookId: bookId,
         count: 1,
         userId: cookie.load("userId")
@@ -18,8 +18,8 @@ export const addCar = (bookId)=>{
 }
 
 
-export const minCar = (bookId)=>{
-    axios.post(`/api/car/minCart`, {
+export const minCart = (bookId)=>{
+    axios.post(`/api/cart/minCart`, {
         bookId: bookId,
         count: 1,
         userId: cookie.load("userId")
@@ -31,8 +31,8 @@ export const minCar = (bookId)=>{
         error => { console.log("请求失败", error); }
     )
 }
-export const changeCar = (num,bookId)=>{
-    axios.post(`/api/car/changeCart`, {
+export const changeCart = (num, bookId)=>{
+    axios.post(`/api/cart/changeCart`, {
         bookId: bookId,
         count: num,
         userId: cookie.load("userId")
@@ -45,8 +45,8 @@ export const changeCar = (num,bookId)=>{
     )
 }
 
-export  const delCar = (bookId)=>{
-    axios.post(`/api/car/delCart`, {
+export  const delCart = (bookId)=>{
+    axios.post(`/api/cart/delCart`, {
         bookId: bookId,
         userId: cookie.load("userId")
     }).then(
@@ -59,7 +59,7 @@ export  const delCar = (bookId)=>{
 }
 
  export function getCar(callback){
-    axios.post(`/api/car/cartList`, {
+    axios.post(`/api/cart/cartList`, {
         userId: cookie.load("userId")
     }).then(
         response => {

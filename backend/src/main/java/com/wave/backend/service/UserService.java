@@ -1,5 +1,4 @@
 package com.wave.backend.service;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.wave.backend.model.User;
 import com.wave.backend.model.response.UserLoginResponse;
 import com.wave.backend.model.response.UserRegisterResponse;
@@ -13,15 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 */
 
 
-public interface UserService extends IService<User> {
+public interface UserService {
 
     /**
-     *
-     * @param userAccount:用户账号
-     * @param userPassword：用户密码
+     * @param userAccount    :用户账号
+     * @param userPassword   ：用户密码
+     * @param repeatPassword
+     * @param email
      * @return 生成的用户ID
      */
-    UserRegisterResponse userRegister(String userAccount, String userPassword);
+    UserRegisterResponse userRegister(String userAccount, String userPassword, String repeatPassword, String email);
     UserLoginResponse userLogin(String userAccount, String userPassword, HttpServletRequest request);
 
     /**
@@ -31,5 +31,5 @@ public interface UserService extends IService<User> {
      */
     User getSaveUser(User originUser);
 
-    public int userLogout(HttpServletRequest request);
+    int userLogout(HttpServletRequest request);
 }

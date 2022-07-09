@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import {listBrand} from "../Brand";
 import '../../css/header.css'
 import '../../css/home.css'
 import {Input, message} from "antd";
 import Pubsub from 'pubsub-js'
 import axios from 'axios';
 import {history} from "../../utils/history";
-import {getRole} from "../../services/userService";
 const {SearchInput} = Input
 
 

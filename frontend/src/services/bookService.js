@@ -1,9 +1,7 @@
-import config from 'config';
-import {postRequest, postRequest_v2} from "../utils/ajax";
-import {listBrand} from "../components/Brand";
+
 import axios from "axios";
 import Pubsub from "pubsub-js";
-import {message} from "antd";
+
 
 
 export const getBook = (id, callback) => {
@@ -14,7 +12,7 @@ export const getBook = (id, callback) => {
             console.log("请求成功", response.data);
             if(response.data != null){
                 // Pubsub.publish('BookDetail',{isLoading:false, bookList: response.data.bookList})
-                const book  = response.data.book;
+                const book  = response.data;
                 callback(book);
             }
         },
@@ -31,14 +29,11 @@ export const getBooks = (id, callback) => {
             console.log("id ="+id)
             console.log("请求成功", response.data);
             if(response.data != null){
-                const book  = response.data.book;
+                const books  = response.data;
                 console.log({callback})
-                callback(book);
+                callback(books);
             }
         },
-        error => {
-            Pubsub.publish('searchBook',{err: error.message})
-        }
     )
 };
 
@@ -69,8 +64,6 @@ export const getBooksById = (id, callback) => {
                 return bookList
             }
         },
-        error => {
-        }
     )
 }
 

@@ -3,9 +3,6 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
 import '../css/login.css'
 
-import {login} from '../services/userService'
-
-
 class LoginForm extends React.Component {
 
 

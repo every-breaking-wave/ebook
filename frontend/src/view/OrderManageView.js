@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {message, Typography, Tag, Button, Descriptions, Collapse, Modal, Form, DatePicker, List} from "antd";
-import {history} from "../utils/history";
-import {cancelOrder, getOrderItemsById} from "../services/orderService";
+import {Typography,  Descriptions, Collapse,  DatePicker} from "antd";
+import {getOrderItemsById} from "../services/orderService";
 import Footer from "../components/Footer";
-
+import {getRole} from "../services/userService";
 import Pubsub from "pubsub-js";
 import SearchOrderHeader from "../components/Header/SearchOrderHeader";
+import {history} from "../utils/history";
 
 const { RangePicker } = DatePicker;
 
@@ -14,7 +14,7 @@ export default class UserManageView extends Component {
     constructor(props) {
         super(props);
         this.state = {sum: 0}
-        this.state = {orderList: [], allOrders: []}
+        this.state = {orderList: [], allOrders: [], orderSum :[]}
     }
 
 
@@ -22,7 +22,6 @@ export default class UserManageView extends Component {
         const orderItemsRes = await getOrderItemsById(userId)
         console.log(orderItemsRes)
         this.setState({orderItems: orderItemsRes})
-        // DepartmentSteps.push({departmentId: departmentId, steps: stepsRes})
     }
 
     callback = (bookInCarList) => {
@@ -32,6 +31,7 @@ export default class UserManageView extends Component {
 
 
     componentDidMount()  {
+
         axios.post(`/api/admin/get-full-order`).then(
             response => {
                 console.log("请求成功", response.data);
@@ -39,6 +39,7 @@ export default class UserManageView extends Component {
                     // history.push({pathname: '/orderManage/default'})
                     this.setState({orderList: response.data})
                     this.setState({allOrders: response.data})
+                    this.calculateOrderSum(response.data)
                 }
             },
         )
@@ -48,6 +49,21 @@ export default class UserManageView extends Component {
             })
 
 
+    }
+
+    calculateOrderSum(orderList){
+        console.log(orderList)
+        let sum = new Array(orderList.length).fill(0);
+        console.log(sum)
+        orderList.map((order, index)=>{
+            order.orderItems.map((item, index1) =>{
+                    sum[index] += item.book.price * item.number
+                }
+            )
+            sum[index] = sum[index].toFixed(2)
+        })
+        this.setState({orderSum:sum})
+        console.log(sum)
     }
 
     timeChange = (value, dateString) => {
@@ -67,7 +83,6 @@ export default class UserManageView extends Component {
         let list = this.state.allOrders;
         console.log(list)
         for (let i = 0; i < list.length; i++) {
-            // list[0] = dateString[0].replace(/-/g, '/');
             let time = new Date(Date.parse(list[i].createTime))
             console.log(time)
             console.log(startTime)
@@ -88,6 +103,7 @@ export default class UserManageView extends Component {
     render() {
         // this.componentDidMount()
         const orderList = this.state.orderList
+        const orderSum = this.state.orderSum
         console.log(orderList)
         var date
         return (
@@ -109,7 +125,15 @@ export default class UserManageView extends Component {
                                 header={
                                     <div style={{width: "100%"}}>
                                         <Typography.Text strong>
-                                            用户Id：{order.userId}   订单创建时间：{date }
+                                            用户Id:{order.userId}
+                                        </Typography.Text>
+                                        <a style={{marginLeft:40}}></a>
+                                        <Typography.Text strong >
+                                           订单创建时间：{date }
+                                        </Typography.Text>
+                                        <a style={{marginLeft:40}}></a>
+                                        <Typography.Text strong >
+                                            总额：{orderSum[index] }
                                         </Typography.Text>
                                     </div>
                                 }
@@ -128,7 +152,7 @@ export default class UserManageView extends Component {
                                                     {orderItem.book.price}
                                                 </Descriptions.Item>
                                                 <Descriptions.Item label="数量">
-                                                    {orderItem.num}
+                                                    {orderItem.number}
                                                 </Descriptions.Item>
                                             </Descriptions>
                                         )

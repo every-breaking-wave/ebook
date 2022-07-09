@@ -1,7 +1,6 @@
 package com.wave.backend.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wave.backend.model.User;
 import com.wave.backend.model.request.UserLoginRequest;
 import com.wave.backend.model.request.UserRegisterRequest;
@@ -9,15 +8,11 @@ import com.wave.backend.model.response.UserLoginResponse;
 import com.wave.backend.model.response.UserRegisterResponse;
 import com.wave.backend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-//import org.apache.commons.lang3.StringUtils;
-import org.apache.maven.surefire.shade.org.apache.commons.lang3.StringUtils;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.wave.backend.constant.UserConstant.ADMIN_ROLE;
 import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
@@ -35,19 +30,18 @@ public class UserController {
 
     @PostMapping("/register")
     public UserRegisterResponse userRegister(@RequestBody UserRegisterRequest userRegisterRequest){
+
         if(userRegisterRequest == null){
-            log.info(("response is null"));
+            log.info(("request is null"));
             return null;
         }
-
 
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();
-        // 判空
-        if(StringUtils.isAnyBlank(userAccount,userPassword)){
-            return null;
-        }
-        return userService.userRegister(userAccount, userPassword);
+        String repeatPassword = userRegisterRequest.getRepeatPassword();
+        String email = userRegisterRequest.getEmail();
+
+        return userService.userRegister(userAccount, userPassword, repeatPassword, email);
     }
 
 
@@ -60,29 +54,22 @@ public class UserController {
         return userService.userLogin(userAccount, userPassword, request);
     }
 
-    @GetMapping("/search")
-    public List<User> searchUsers( String username, HttpServletRequest request){
-        if(!isAdmin(request))
-            return new ArrayList<>();
-
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        if(StringUtils.isNoneBlank(username)){
-            queryWrapper.like("username",username);  // 找出含有username的user
-        }
-
-        List<User> userList =  userService.list(queryWrapper);
-        return userList.stream().map(user -> {
-            return userService.getSaveUser(user);
-                }
-        ).collect(Collectors.toList());
-    }
-
-    @PostMapping("/delete")
-    public boolean deleteUser(long id, HttpServletRequest request){
-        if(!isAdmin(request)  || id <= 0 )
-            return false;
-        return userService.removeById(id);
-    }
+//    @GetMapping("/search")
+//    public List<User> searchUsers( String username, HttpServletRequest request){
+//        if(!isAdmin(request))
+//            return new ArrayList<>();
+//
+//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        if(StringUtils.isNoneBlank(username)){
+//            queryWrapper.like("username",username);  // 找出含有username的user
+//        }
+//
+//        List<User> userList =  userService.list(queryWrapper);
+//        return userList.stream().map(user -> {
+//            return userService.getSaveUser(user);
+//                }
+//        ).collect(Collectors.toList());
+//    }
 
     @PostMapping ("/check")
     public boolean checkAuth(HttpServletRequest request){

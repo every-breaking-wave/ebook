@@ -1,14 +1,10 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component} from 'react';
 import cookie from "react-cookies";
-import {useCookies} from 'react-cookie';
 import axios from "axios";
-import {message, Typography, Tag, Button, Descriptions, Collapse, Modal, DatePicker} from "antd";
-import {history} from "../utils/history";
+import {Typography, Button, Descriptions, Collapse, DatePicker} from "antd";
 import {cancelOrder, compare, getOrderItemsById} from "../services/orderService";
-import HeaderL from "../components/Header/Header";
 import Footer from "../components/Footer";
 import SearchOrderHeader from "../components/Header/SearchOrderHeader";
-import SearchOrder from "../components/Header/SearchOrder";
 import Pubsub from "pubsub-js";
 
 const { RangePicker } = DatePicker;
@@ -17,7 +13,7 @@ export default class UserManageView extends Component {
     constructor(props) {
         super(props);
         this.state = {sum: 0}
-        this.state = {orderList: [], allOrders: [], status: 0, arr:[]}
+        this.state = {orderList: [], allOrders: [], status: 0, arr:[], orderSum: []}
     }
 
     componentDidMount() {
@@ -27,9 +23,9 @@ export default class UserManageView extends Component {
             response => {
                 console.log("请求成功", response.data);
                 if (response.data != null) {
-                    // history.push({pathname: '/default'})
                     this.setState({orderList: response.data})
                     this.setState({allOrders: response.data})
+                    this.calculateOrderSum(response.data)
                 }
             },
         )
@@ -38,6 +34,21 @@ export default class UserManageView extends Component {
             console.log('收到订单数据!',stateObj);
             this.setState(stateObj)
         })
+    }
+
+    calculateOrderSum(orderList){
+        console.log(orderList)
+        let sum = new Array(orderList.length).fill(0);
+        console.log(sum)
+        orderList.map((order, index)=>{
+            order.orderItems.map((item, index1) =>{
+                sum[index] += item.book.price * item.number
+            }
+            )
+            sum[index] = sum[index].toFixed(2)
+        })
+        this.setState({orderSum:sum})
+        console.log(sum)
     }
 
     timeChange = (value, dateString) => {
@@ -60,6 +71,7 @@ export default class UserManageView extends Component {
         let arr =[];
         let sumCount=0;
         let numberCount=0;
+        let orderSum = 0;
         for(let index = 0;index < 40;index++){
             number[index] = 0;
             bookName[index] = '';
@@ -79,14 +91,16 @@ export default class UserManageView extends Component {
                     number[bookId]++;
                     bookName[bookId] = book.bookName;
                     author[bookId] = book.author
-                    sum[bookId] += Number((item.num * item.price));
+                    sum[bookId] += Number((item.number * book.price));
+                    orderSum += Number((item.number * book.price));
+                    console.log(sum[bookId])
                 }
             }
         }
         for(let index = 0;index < 40;index++){
             if(number[index] !== 0)
             {
-                let json = {bookId:index,author: author[index], bookName:bookName[index],bookNumber:number[index],sum:sum[index].toFixed(1)};
+                let json = {bookId:index,author: author[index], bookName:bookName[index],bookNumber:number[index],sum:sum[index].toFixed(2),orderSum: orderSum};
                 sumCount+=sum[index];
                 numberCount+=number[index]
                 arr.push(json)
@@ -119,6 +133,8 @@ export default class UserManageView extends Component {
     render() {
         const orderList = this.state.orderList || []
         const bookList = this.state.arr || []
+        const orderSum = this.state.orderSum || []
+        console.log(orderSum)
         let date
         return (
             <div>
@@ -165,7 +181,12 @@ export default class UserManageView extends Component {
                                                 <Typography.Text strong>
                                                     订单创建时间：{ date}
                                                 </Typography.Text>
+                                                <a style={{marginLeft:40}}></a>
+                                                <Typography.Text strong>
+                                                    总价 {orderSum[index]}
+                                                </Typography.Text>
                                             </div>
+
                                         }
                                     >
                                         {
@@ -182,7 +203,7 @@ export default class UserManageView extends Component {
                                                             {orderItem.book.price}
                                                         </Descriptions.Item>
                                                         <Descriptions.Item label="数量">
-                                                            {orderItem.num}
+                                                            {orderItem.number}
                                                         </Descriptions.Item>
                                                     </Descriptions>
                                                 )

@@ -2,6 +2,7 @@ package com.wave.backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wave.backend.model.Admin;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author Feng
@@ -9,6 +10,7 @@ import com.wave.backend.model.Admin;
 * @createDate 2022-05-09 17:46:17
 * @Entity generator.domain.Admin
 */
+@Mapper
 public interface AdminMapper extends BaseMapper<Admin> {
 
 

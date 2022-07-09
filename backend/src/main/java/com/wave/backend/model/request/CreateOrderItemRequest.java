@@ -1,6 +1,6 @@
 package com.wave.backend.model.request;
 
-import com.wave.backend.model.CarItem;
+import com.wave.backend.model.CartItem;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,7 +12,7 @@ public class CreateOrderItemRequest implements Serializable {
     private static final long serialVersionUID = -6937919124813537741L;
     private Integer id;
 
-    private List<CarItem> bookList;
+    private List<CartItem> bookList;
 
     private Integer orderId;
 

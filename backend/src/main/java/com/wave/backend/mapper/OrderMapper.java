@@ -3,10 +3,7 @@ package com.wave.backend.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wave.backend.model.Order;
 import com.wave.backend.model.OrderItem;
-import org.apache.ibatis.annotations.One;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -16,6 +13,7 @@ import java.util.List;
 * @createDate 2022-05-13 15:13:11
 * @Entity generator.domain.Order
 */
+@Mapper
 public interface OrderMapper extends BaseMapper<Order> {
     @Results({
             @Result(column = "orderId", property = "orderId"),//必须要加，否则user实体中userId为null

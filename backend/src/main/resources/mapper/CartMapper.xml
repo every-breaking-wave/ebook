@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wave.backend.mapper.CarMapper">
+<mapper namespace="com.wave.backend.mapper.CartMapper">
 
-    <resultMap id="BaseResultMap" type="com.wave.backend.model.Car">
+    <resultMap id="BaseResultMap" type="com.wave.backend.model.Cart">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="userId" column="userId" jdbcType="INTEGER"/>
     </resultMap>

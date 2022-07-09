@@ -1,12 +1,10 @@
 // 单行可编辑
 import React from "react";
-import {Table, Input, Button, Avatar} from "antd";
-import HeaderL from "../components/Header/Header";
+import {Table, Input, Button} from "antd";
 import Footer from "../components/Footer";
 import axios from "axios";
 import Pubsub from "pubsub-js";
-import {history} from "../utils/history";
-import {delBook, getAllBooks, refreshBook} from "../services/bookService";
+import {delBook, refreshBook} from "../services/bookService";
 import SearchBookHeader from "../components/Header/SearchBookHeader";
 
 
@@ -195,10 +193,10 @@ export default class BookManageView extends React.Component {
             },
             {
                 title: "简介",
-                dataIndex: "bookDesciption",
-                key: "bookDesciption",
+                dataIndex: "bookDescription",
+                key: "bookDescription",
                 render: (text, record, index) =>
-                    this.renderInput(text, record, index, "bookDesciption"),
+                    this.renderInput(text, record, index, "bookDescription"),
             },
             {
                 title: "库存",

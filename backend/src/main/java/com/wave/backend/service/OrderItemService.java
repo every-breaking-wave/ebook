@@ -1,7 +1,7 @@
 package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wave.backend.model.CarItem;
+import com.wave.backend.model.CartItem;
 import com.wave.backend.model.OrderItem;
 import com.wave.backend.model.response.CreateOrderItemResponse;
 
@@ -14,7 +14,8 @@ import java.util.List;
 */
 public interface OrderItemService extends IService<OrderItem> {
 
-    CreateOrderItemResponse createOrderItem(List<CarItem> bookInCarList, Integer orderId);
+    CreateOrderItemResponse createOrderItem(List<CartItem> bookInCarList, Integer orderId);
+
 
 
 }

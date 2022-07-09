@@ -1,5 +1,6 @@
 package com.wave.backend.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -17,23 +18,14 @@ import java.util.List;
  * 
  * @TableName order
  */
-@TableName(value ="book_order")
+@TableName(value ="orders")
 @Data
 public class Order implements Serializable {
-    /**
-     * 
-     */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
-    /**
-     * 
-     */
     private  Integer userId;
 
-    /**
-     * 
-     */
     private Date createTime;
 
     @TableField(exist = false)

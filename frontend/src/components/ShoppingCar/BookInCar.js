@@ -2,9 +2,11 @@ import React from "react";
 import '../../css/base.css'
 import '../../css/shoppingCar.css'
 import '../../services/shoppingCarService'
-import {addCar, changeCar, delCar, minCar} from "../../services/shoppingCarService";
+import {addCart, changeCart, delCart, minCart} from "../../services/shoppingCarService";
 import * as util from "util";
 import {InputNumber,Checkbox} from "antd";
+import Pubsub from "pubsub-js";
+import {Link} from "react-router-dom";
 
 
 export default class BookInCar extends React.Component{
@@ -13,28 +15,28 @@ export default class BookInCar extends React.Component{
         this.state  = {utils: 1,num:1}
         this.minValue = this.minValue.bind(this)
         this.addValue = this.addValue.bind(this)
-        this.handleDelete = this.handleDelete.bind(this)
+        const {info, deleteCartItem} = this.props;
+
+        // this.handleDelete = this.handleDelete.bind(this)
     }
     onChange(value) {
         console.log('changed', value);
-        changeCar(value,this.props.info.bookId)
+        changeCart(value,this.props.info.bookId)
         this.setState({num:value})
     }
     addValue(){
-        addCar(this.props.info.id)
+        addCart(this.props.info.id)
         this.setState({utils: !util})
         console.log(this.state.utils)
-        // this.props.refresh()
     }
     minValue(){
-        if(this.props.info.countInCar === 1) {
+        if(this.props.info.number == 1) {
             alert("书本数量最少为1");
         }
         else {
-            minCar(this.props.info.id)
+            minCart(this.props.info.id)
             this.setState({utils: !util})
             console.log(this.state.utils)
-            // this.props.refresh()
         }
     }
 
@@ -48,34 +50,40 @@ export default class BookInCar extends React.Component{
         }
     }
 
+    handleDelete(bookId){
+        console.log("delete")
+        delCart(bookId)
+        Pubsub.publish('delCartItem',{isFirst:false,isLoading:true})
+        this.props.deleteCartItem()
+    }
+
     componentWillMount() {
         const {info} = this.props
         this.setState({
-            num: info.countInCar
+            num: info.number
         } )
         console.log(info)
     }
 
 
-    handleDelete(){
-        this.onChange(0)
-    }
 
     render() {
         console.log(this.props)
+        const bookId = this.props.info.book.id
         const {info} = this.props;
+
+        // const {delete} = this.props
         return(
             <div onClick={this.hide} className="productBodyItemContent">
-                {/*<input type={"checkbox"} className="checkBox checkIcon"></input>*/}
                 <Checkbox defaultChecked={false} diabled />
-                <a className="itemImg" href="">
-                    <img src={info.cover} alt="" className={"bookInCar"}/>
-                </a>
+                <Link className="itemImg" Link to={`/book/${info.book.id}`}>
+                    <img src={info.book.cover} alt="" className={"bookInCar"}/>
+                </Link>
                 <div className="itemInfo">
-                    <h5>《{info.bookName}》</h5>
+                    <h5>《{info.book.bookName}》</h5>
                 </div>
                 <div className="itemInfoUnion1">
-                    <span className="itemInfoUnionPice">{info.price}</span>
+                    <span className="itemInfoUnionPice">{info.book.price}</span>
                 </div>
                 <div className="itemInfoUnion2">
                     <div className="itemInfoUnion2Module l">
@@ -83,10 +91,10 @@ export default class BookInCar extends React.Component{
                     </div>
                 </div>
                 <div className="itemInfoUnion3">
-                    <span className="sumNum"> {info.price * 10 * this.state.num / 10} </span>
+                    <span className="sumNum"> {info.book.price * 10 * this.state.num / 10} </span>
                 </div>
                 <div className="itemInfoUnion4">
-                    <i onClick={this.handleDelete.bind(this)} className="delete"> </i>
+                    <a onClick={this.handleDelete.bind(this,bookId)} className="delete"> </a>
                 </div>
             </div>
         )

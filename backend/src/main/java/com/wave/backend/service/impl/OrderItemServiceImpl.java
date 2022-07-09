@@ -7,7 +7,7 @@ import com.wave.backend.constant.CreateOrderItemStatus;
 import com.wave.backend.mapper.BookMapper;
 import com.wave.backend.mapper.OrderMapper;
 import com.wave.backend.model.Book;
-import com.wave.backend.model.CarItem;
+import com.wave.backend.model.CartItem;
 import com.wave.backend.model.Order;
 import com.wave.backend.model.OrderItem;
 import  com.wave.backend.mapper.OrderitemMapper;
@@ -39,7 +39,7 @@ implements OrderItemService {
     private AutoMapper autoMapper;
 
     @Override
-    public CreateOrderItemResponse createOrderItem(List<CarItem> bookInCarList, Integer orderId) {
+    public CreateOrderItemResponse createOrderItem(List<CartItem> bookInCarList, Integer orderId) {
         CreateOrderItemResponse createOrderItemResponse = new CreateOrderItemResponse();
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
         orderQueryWrapper.eq("id",orderId);
@@ -51,27 +51,26 @@ implements OrderItemService {
         Order order = orderMapper.selectById(orderId);
         System.out.println("订单列表如下:");
         // 遍历购物车，创建订单
-        for (CarItem carItem : bookInCarList) {
-            QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("id", carItem.getBookId());
-            if (bookMapper.selectCount(queryWrapper) <= 0) {
+        for (CartItem cartItem : bookInCarList) {
+            Book book;
+            if ((book = bookMapper.selectById(cartItem.getBookId())) == null) {
                 createOrderItemResponse.setStatus(CreateOrderItemStatus.WRONG_ORDER_ID);
                 return createOrderItemResponse;
             }
             OrderItem orderItem = new OrderItem();
             orderItem.setOrderId(orderId);
-            orderItem.setBookId(carItem.getBookId());
-            orderItem.setPrice(carItem.getPrice());
-            Book bookInRepo = bookMapper.selectById(carItem.getBookId());
+            orderItem.setBookId(cartItem.getBookId());
+            orderItem.setPrice(book.getPrice());
+            Book bookInRepo = autoMapper.mapperEntity(cartItem).getBook();
             // 判断库存
-            if(carItem.getCountInCar() > bookInRepo.getInventory()){
+            if(cartItem.getNumber() > bookInRepo.getInventory()){
                 createOrderItemResponse.setStatus(CreateOrderItemStatus.WRONG_NUM);
                 return createOrderItemResponse;
             }
             //更新库存
-            bookInRepo.setInventory(bookInRepo.getInventory() - carItem.getCountInCar());
+            bookInRepo.setInventory(bookInRepo.getInventory() - cartItem.getNumber());
             bookMapper.updateById(bookInRepo);
-            orderItem.setNum(carItem.getCountInCar());
+            orderItem.setNumber(cartItem.getNumber());
             // 需要考虑更新order的金额吗
             this.save(orderItem);
             System.out.println(orderItem);

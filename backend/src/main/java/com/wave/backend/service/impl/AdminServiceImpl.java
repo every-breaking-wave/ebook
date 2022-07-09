@@ -2,6 +2,9 @@ package com.wave.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wave.backend.dao.BookDao;
+import com.wave.backend.dao.OrderDao;
+import com.wave.backend.dao.UserDao;
 import com.wave.backend.mapper.*;
 import com.wave.backend.model.Admin;
 import com.wave.backend.model.Book;
@@ -23,87 +26,60 @@ import java.util.List;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
 implements AdminService{
+    @Resource
+    private BookDao bookDao;
 
     @Resource
-    private UserMapper userMapper;
-    @Resource
-    private BookMapper bookMapper;
+    private OrderDao orderDao;
 
     @Resource
-    private OrderMapper orderMapper;
+    private UserDao userDao;
 
     @Override
     public void addBook(Book book) {
         // 判断是否同名
-//
-//        QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
-        bookMapper.insert(book);
+        if(bookDao.ifBookExist(book.getBookName())){
+            return;
+        }
+        bookDao.saveOne(book);
         log.info("addBook Ok");
     }
 
     @Override
     public void delBook(Book book) {
-
-        QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("bookName", book.getBookName());
-        if(bookMapper.selectCount(queryWrapper) == 0){
+        if(!bookDao.ifBookExist(book.getBookName())){
             return;
         }
         book.setIsDeleted(1);
-        bookMapper.updateById(book);
+        bookDao.saveOne(book);
         log.info("delete Ok");
     }
 
     @Override
     public void updateBook(Book book) {
-
-        QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("bookName", book.getBookName());
-        if(bookMapper.selectCount(queryWrapper) == 0){
-            bookMapper.insert(book);
-            return;
-        }
-        bookMapper.updateById(book);
-        log.info("updateBook Ok");
+        bookDao.saveOne(book);
     }
 
     @Override
     public boolean banUser(Integer userId) {
-
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        if( userMapper.selectById(userId) == null){
-            log.info("Del user failed, user not exsits");
+        User user;
+        if( (user = userDao.findById(userId)) == null){
+            log.info("Del user failed, user does not exist");
             return false;
         }
-        User user = userMapper.selectById(userId);
         user.setUserStatus(user.getUserStatus() == 1? 0 : 1);
-        userMapper.updateById(user);
+        userDao.saveOne(user);
         log.info("ban user succeed");
         return true;
     }
 
     @Override
     public List<Order> getAllOrders() {
-        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
-        List<Order> orderItems = orderMapper.selectList(queryWrapper);
-        if(orderItems != null){
-            log.info("Get all orders ok");
-            return orderItems;
-        }
-        log.info("Get all orders failed");
-            return null;
-
+        return orderDao.getAll();
     }
 
     @Override
     public List<User> getAllUser() {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        List<User> users = userMapper.selectList(queryWrapper);
-        if(users != null){
-            log.info("Get all users ok");
-            return users;
-        }
-        log.info("Get all users failed");
-        return null;
+        return userDao.findAll();
     }
 }

@@ -1,7 +1,8 @@
 package com.wave.backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.wave.backend.model.Car;
+import com.wave.backend.model.Cart;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author Feng
@@ -9,7 +10,8 @@ import com.wave.backend.model.Car;
 * @createDate 2022-05-15 13:49:40
 * @Entity generator.domain.Car
 */
-public interface CarMapper extends BaseMapper<Car> {
+@Mapper
+public interface CartMapper extends BaseMapper<Cart> {
 
 
 }

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {listBrand} from "../Brand";
 import '../../css/header.css'
 import '../../css/home.css'
 import {Input, message} from "antd";

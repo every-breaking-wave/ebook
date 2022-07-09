@@ -1,8 +1,8 @@
 package com.wave.backend.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wave.backend.controller.UserController;
+import com.wave.backend.dao.BookDao;
 import com.wave.backend.model.Book;
 import com.wave.backend.mapper.BookMapper;
 import com.wave.backend.model.response.GetBookResponse;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author Feng
@@ -24,38 +25,30 @@ import javax.servlet.http.HttpServletRequest;
 public class BookServiceImpl extends ServiceImpl<BookMapper, Book>
 implements BookService{
     @Resource
-    private BookMapper bookMapper;
-    @Resource
     private UserController userController;
+
+    @Resource
+    private BookDao bookDao;
 
     @Override
     public SearchBookResponse searchBook(String searchKey) {
         log.info("Searching books");
         SearchBookResponse searchBookResponse = new SearchBookResponse();
-        QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
-        // 过滤已删除书本
-        queryWrapper.eq("isDeleted", 0);
-        // 若为空查询，返回所有书本
-        if(!searchKey.equals("default")){
-            queryWrapper.like("bookName",searchKey);
-        }
-        searchBookResponse.setBookList(bookMapper.selectList(queryWrapper));
+        searchBookResponse.setBookList(bookDao.findBySearchKey(searchKey));
         return searchBookResponse;
     }
 
     @Override
-    public GetBookResponse getBook(Integer id) {
+    public Book getBook(Integer id) {
         log.info("getting book detail");
-        GetBookResponse getBookResponse = new GetBookResponse();
-        getBookResponse.setBook(bookMapper.selectById(id));
-        return getBookResponse;
+        return bookDao.findById(id);
     }
 
     /**
      * 根据权限展示账单中的书
      */
     @Override
-    public GetBookResponse getBooks(Integer id, HttpServletRequest request) {
+    public List<Book> getBooks(Integer id, HttpServletRequest request) {
         // 判断权限
         if(userController.isAdmin(request)){
             return  null;

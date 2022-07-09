@@ -1,8 +1,7 @@
-import React, {Component, useEffect} from 'react';
-import cookie from "react-cookies";
+import React, {Component} from 'react';
 import axios from "axios";
-import {message, Typography, Tag, Button, Descriptions, Collapse, Modal, DatePicker} from "antd";
-import {cancelOrder, compare, getOrderItemsById} from "../services/orderService";
+import {message,Button, Descriptions, DatePicker} from "antd";
+import {compare, getOrderItemsById} from "../services/orderService";
 import Footer from "../components/Footer";
 import TopBar from "../components/Header/TopBar";
 
@@ -24,6 +23,7 @@ export default class StatisticView extends Component {
                     // history.push({pathname: '/default'})
                     this.setState({orderList: response.data})
                     this.setState({allOrders: response.data})
+                    this.calculateOrderSum(response.data)
                 }
             },
         )
@@ -155,9 +155,9 @@ export default class StatisticView extends Component {
                     let book = item.book;
                     let bookId = book.id;
                     author[bookId] = book.author
-                    number[bookId] += item.num;
+                    number[bookId] += item.number;
                     bookName[bookId] = book.bookName;
-                    sum[bookId] += Number((item.num * item.price));
+                    sum[bookId] += Number((item.number * item.price));
                 }
             }
         }
@@ -224,7 +224,7 @@ export default class StatisticView extends Component {
                 for (let j = 0; j <= data[i].orderItems.length - 1; j++) {
                     let item = data[i].orderItems[j];
                     number[userArrIndex]++;
-                    sum[userArrIndex] += Number((item.num * item.price));
+                    sum[userArrIndex] += Number((item.number * item.price));
                 }
             }
         }
