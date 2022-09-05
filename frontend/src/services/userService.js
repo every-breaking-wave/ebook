@@ -93,7 +93,7 @@ export  function login  (userAccount, userPassword, history) {
         userPassword: userPassword
     }).then(
         response => {
-            console.log("请求成功", response.data);
+            // console.log("请求成功", response.data);
             if (response.data.status == 'USER_ALL_OK') {
                 message.info("登陆成功，祝您购物愉快")
                 // let { history } = this.props
@@ -116,12 +116,10 @@ export  function login  (userAccount, userPassword, history) {
             else if("USER_ACCOUNT_ILLEGAL" == response.data.status){
                 message.error("登录失败：账号不能包含非法字符")
             }
-        },
-        error => { console.log("请求失败", error);
-            return false
         }
     )
 }
+
 
 
 export const register = (userAccount, userPassword, repeatPassword, email) => {
