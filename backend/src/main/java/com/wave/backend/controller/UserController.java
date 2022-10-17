@@ -1,20 +1,19 @@
 package com.wave.backend.controller;
 
 
-import com.wave.backend.model.User;
+import com.wave.backend.entity.User;
 import com.wave.backend.model.request.UserLoginRequest;
 import com.wave.backend.model.request.UserRegisterRequest;
 import com.wave.backend.model.response.UserLoginResponse;
 import com.wave.backend.model.response.UserRegisterResponse;
 import com.wave.backend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import static com.wave.backend.constant.UserConstant.ADMIN_ROLE;
 import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -25,12 +24,13 @@ import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Resource
-    private UserService userService;
+    @Autowired
+    WebApplicationContext applicationContext;
 
     @PostMapping("/register")
     public UserRegisterResponse userRegister(@RequestBody UserRegisterRequest userRegisterRequest){
 
+        UserService userService = applicationContext.getBean(UserService.class);
         if(userRegisterRequest == null){
             log.info(("request is null"));
             return null;
@@ -47,6 +47,9 @@ public class UserController {
 
     @PostMapping("/login")
     public UserLoginResponse userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request){
+        UserService userService = applicationContext.getBean(UserService.class);
+        System.out.println(this);
+        System.out.println(userService);
         if(userLoginRequest == null)
             return null;
         String userAccount = userLoginRequest.getUserAccount();
@@ -80,14 +83,14 @@ public class UserController {
 
     @PostMapping("/role")
     public boolean isAdmin(HttpServletRequest request){
-        Object obj = request.getSession().getAttribute(USER_LOGIN_STATE);
-        Integer role = (Integer) obj;
-        return role == ADMIN_ROLE; // 返回空数组
+        UserService userService = applicationContext.getBean(UserService.class);
+        return userService.isAdmin(request);
     }
 
     @PostMapping("/logout")
-    public Integer userLogout(HttpServletRequest request) {
-        int result = userService.userLogout(request);
+    public Double userLogout(HttpServletRequest request) {
+        UserService userService = applicationContext.getBean(UserService.class);
+        Double result = userService.userLogout(request);
         return result;
     }
 

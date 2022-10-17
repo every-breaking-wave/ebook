@@ -3,7 +3,7 @@ package com.wave.backend.dao.daoImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wave.backend.dao.BookDao;
 import com.wave.backend.mapper.BookMapper;
-import com.wave.backend.model.Book;
+import com.wave.backend.entity.Book;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

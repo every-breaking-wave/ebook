@@ -1,6 +1,6 @@
 package com.wave.backend.dao;
 
-import com.wave.backend.model.Cart;
+import com.wave.backend.entity.Cart;
 
 
 

@@ -1,12 +1,12 @@
 package com.wave.backend.dao;
 
-import com.wave.backend.model.Order;
+import com.wave.backend.entity.Order;
 
 import java.util.List;
 
 public interface OrderDao {
 
-    Integer saveOne(Order order);
+    void saveOne(Order order);
 
     List<Order> getAll();
 
@@ -15,4 +15,6 @@ public interface OrderDao {
     Order getVo(Order order);
 
     List<Order> getVos(List<Order> orders);
+
+    Order getById(Integer orderId);
 }

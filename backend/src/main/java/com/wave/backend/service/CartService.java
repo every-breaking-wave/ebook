@@ -1,7 +1,7 @@
 package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wave.backend.model.Cart;
+import com.wave.backend.entity.Cart;
 
 /**
 * @author Feng

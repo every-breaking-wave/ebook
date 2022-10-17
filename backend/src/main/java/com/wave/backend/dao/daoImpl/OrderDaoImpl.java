@@ -4,13 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.dreamyoung.mprelation.AutoMapper;
 import com.wave.backend.dao.OrderDao;
 import com.wave.backend.mapper.OrderMapper;
-import com.wave.backend.model.Order;
+import com.wave.backend.entity.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Component
+@Transactional
 public class OrderDaoImpl implements OrderDao {
 
     @Resource
@@ -20,11 +22,13 @@ public class OrderDaoImpl implements OrderDao {
     private AutoMapper autoMapper;
 
     @Override
-    public Integer saveOne(Order order) {
+    @Transactional
+    public void saveOne(Order order) {
         if(order.getId() == null){
-            return orderMapper.insert(order);
+            orderMapper.insert(order);
+        } else {
+            orderMapper.updateById(order);
         }
-        return orderMapper.updateById(order);
     }
 
     @Override
@@ -54,5 +58,10 @@ public class OrderDaoImpl implements OrderDao {
             autoMapper.mapperEntity(order.getOrderItems());
         }
         return orders;
+    }
+
+    @Override
+    public Order getById(Integer orderId) {
+        return orderMapper.selectById(orderId);
     }
 }

@@ -1,8 +1,6 @@
 package com.wave.backend.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.wave.backend.model.Admin;
-import com.wave.backend.model.User;
+import com.wave.backend.entity.Admin;
 
 
 public interface AdminDao {

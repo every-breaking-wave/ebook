@@ -1,6 +1,6 @@
 package com.wave.backend.dao;
 
-import com.wave.backend.model.Book;
+import com.wave.backend.entity.Book;
 
 import java.util.List;
 

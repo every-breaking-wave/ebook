@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.dreamyoung.mprelation.AutoMapper;
 import com.wave.backend.dao.CartDao;
 import com.wave.backend.mapper.CartMapper;
-import com.wave.backend.model.Cart;
-import org.apache.ibatis.annotations.Mapper;
+import com.wave.backend.entity.Cart;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

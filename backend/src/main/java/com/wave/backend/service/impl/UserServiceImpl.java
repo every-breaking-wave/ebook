@@ -5,9 +5,9 @@ import com.wave.backend.constant.UserServiceStatus;
 import com.wave.backend.dao.AdminDao;
 import com.wave.backend.dao.CartDao;
 import com.wave.backend.dao.UserDao;
-import com.wave.backend.model.Admin;
-import com.wave.backend.model.Cart;
-import com.wave.backend.model.User;
+import com.wave.backend.entity.Admin;
+import com.wave.backend.entity.Cart;
+import com.wave.backend.entity.User;
 import com.wave.backend.model.response.UserLoginResponse;
 import com.wave.backend.model.response.UserRegisterResponse;
 import com.wave.backend.service.UserService;
@@ -15,12 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.context.annotation.SessionScope;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.wave.backend.constant.UserConstant.ADMIN_ROLE;
 import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -31,6 +33,7 @@ import static com.wave.backend.constant.UserConstant.USER_LOGIN_STATE;
 
 @Service
 @Slf4j
+@SessionScope
 public class UserServiceImpl implements UserService {
     /**
      * 盐值： 用于混淆密码
@@ -176,6 +179,9 @@ public class UserServiceImpl implements UserService {
 
         userLoginResponse.setStatus(UserServiceStatus.USER_ALL_OK);
 
+        // 开始计时
+        timeCounter(request, true);
+
         return userLoginResponse;
     }
 
@@ -196,9 +202,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int userLogout(HttpServletRequest request)  {
+    public Double userLogout(HttpServletRequest request)  {
         // 移除登录态
         request.getSession().removeAttribute(USER_LOGIN_STATE);
-        return 1;
+        return timeCounter(request, false);
+    }
+
+    @Override
+    public Double timeCounter(HttpServletRequest request, Boolean isStart) {
+        if(isStart) {
+            request.getSession().setAttribute("time", System.currentTimeMillis());
+            return 0.0;
+        }
+        Double time = ((Long)(System.currentTimeMillis() - (Long) request.getSession().getAttribute("time"))).doubleValue() / 1000;
+        log.info( "Login time is :" + time +"s");
+        return time;
+    }
+
+    @Override
+    public Boolean isAdmin(HttpServletRequest request) {
+        Object obj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        Integer role = (Integer) obj;
+        return role == ADMIN_ROLE; // 返回空数组
     }
 }

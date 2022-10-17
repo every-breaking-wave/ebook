@@ -1,11 +1,10 @@
 package com.wave.backend.controller;
 
-import com.wave.backend.model.Cart;
-import com.wave.backend.model.CartItem;
+import com.wave.backend.entity.Cart;
+import com.wave.backend.entity.CartItem;
 import com.wave.backend.model.request.updateCartItemRequest;
 import com.wave.backend.model.request.CartListRequest;
 import com.wave.backend.model.response.CarListResponse;
-import com.wave.backend.service.BookService;
 import com.wave.backend.service.CartItemService;
 import com.wave.backend.service.CartService;
 import lombok.extern.slf4j.Slf4j;

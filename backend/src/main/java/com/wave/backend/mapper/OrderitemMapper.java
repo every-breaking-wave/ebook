@@ -1,7 +1,7 @@
 package com.wave.backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.wave.backend.model.OrderItem;
+import com.wave.backend.entity.OrderItem;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

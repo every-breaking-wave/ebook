@@ -1,5 +1,5 @@
 package com.wave.backend.service;
-import com.wave.backend.model.User;
+import com.wave.backend.entity.User;
 import com.wave.backend.model.response.UserLoginResponse;
 import com.wave.backend.model.response.UserRegisterResponse;
 
@@ -31,5 +31,9 @@ public interface UserService {
      */
     User getSaveUser(User originUser);
 
-    int userLogout(HttpServletRequest request);
+    Double userLogout(HttpServletRequest request);
+
+    Double timeCounter(HttpServletRequest request, Boolean isStart);
+
+    Boolean isAdmin(HttpServletRequest request);
 }

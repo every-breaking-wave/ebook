@@ -3,7 +3,7 @@ package com.wave.backend.dao.daoImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wave.backend.dao.AdminDao;
 import com.wave.backend.mapper.AdminMapper;
-import com.wave.backend.model.Admin;
+import com.wave.backend.entity.Admin;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

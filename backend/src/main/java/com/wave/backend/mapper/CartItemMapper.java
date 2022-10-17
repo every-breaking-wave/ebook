@@ -1,7 +1,7 @@
 package com.wave.backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.wave.backend.model.CartItem;
+import com.wave.backend.entity.CartItem;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

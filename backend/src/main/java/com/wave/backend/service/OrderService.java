@@ -2,7 +2,7 @@ package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import com.wave.backend.model.Order;
+import com.wave.backend.entity.Order;
 import com.wave.backend.model.response.CreateOrderResponse;
 
 import javax.servlet.http.HttpServletRequest;

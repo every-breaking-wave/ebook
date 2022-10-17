@@ -1,15 +1,14 @@
 package com.wave.backend.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wave.backend.dao.BookDao;
 import com.wave.backend.dao.OrderDao;
 import com.wave.backend.dao.UserDao;
 import com.wave.backend.mapper.*;
-import com.wave.backend.model.Admin;
-import com.wave.backend.model.Book;
-import com.wave.backend.model.Order;
-import com.wave.backend.model.User;
+import com.wave.backend.entity.Admin;
+import com.wave.backend.entity.Book;
+import com.wave.backend.entity.Order;
+import com.wave.backend.entity.User;
 import com.wave.backend.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

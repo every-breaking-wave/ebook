@@ -3,9 +3,9 @@ package com.wave.backend.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wave.backend.dao.CartDao;
 import com.wave.backend.dao.CartItemDao;
-import com.wave.backend.model.Cart;
+import com.wave.backend.entity.Cart;
 import com.wave.backend.mapper.CartMapper;
-import com.wave.backend.model.CartItem;
+import com.wave.backend.entity.CartItem;
 import com.wave.backend.service.CartService;
 import org.springframework.stereotype.Service;
 

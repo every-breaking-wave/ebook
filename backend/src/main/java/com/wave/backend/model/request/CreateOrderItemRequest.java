@@ -1,6 +1,6 @@
 package com.wave.backend.model.request;
 
-import com.wave.backend.model.CartItem;
+import com.wave.backend.entity.CartItem;
 import lombok.Data;
 
 import java.io.Serializable;

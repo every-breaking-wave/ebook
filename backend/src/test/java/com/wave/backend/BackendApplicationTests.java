@@ -2,7 +2,7 @@ package com.wave.backend;
 
 import com.github.dreamyoung.mprelation.AutoMapper;
 import com.wave.backend.mapper.OrderMapper;
-import com.wave.backend.model.Order;
+import com.wave.backend.entity.Order;
 import com.wave.backend.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

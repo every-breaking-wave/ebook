@@ -1,6 +1,6 @@
 package com.wave.backend.controller;
 
-import com.wave.backend.model.Book;
+import com.wave.backend.entity.Book;
 import com.wave.backend.model.response.SearchBookResponse;
 import com.wave.backend.service.BookService;
 import lombok.extern.slf4j.Slf4j;

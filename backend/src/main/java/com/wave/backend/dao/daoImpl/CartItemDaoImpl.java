@@ -5,10 +5,8 @@ import com.github.dreamyoung.mprelation.AutoMapper;
 import com.wave.backend.dao.CartDao;
 import com.wave.backend.dao.CartItemDao;
 import com.wave.backend.mapper.CartItemMapper;
-import com.wave.backend.mapper.CartMapper;
-import com.wave.backend.model.Cart;
-import com.wave.backend.model.CartItem;
-import com.wave.backend.model.Order;
+import com.wave.backend.entity.Cart;
+import com.wave.backend.entity.CartItem;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

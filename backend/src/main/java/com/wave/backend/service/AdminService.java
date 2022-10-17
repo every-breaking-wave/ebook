@@ -1,10 +1,10 @@
 package com.wave.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wave.backend.model.Admin;
-import com.wave.backend.model.Book;
-import com.wave.backend.model.Order;
-import com.wave.backend.model.User;
+import com.wave.backend.entity.Admin;
+import com.wave.backend.entity.Book;
+import com.wave.backend.entity.Order;
+import com.wave.backend.entity.User;
 
 import java.util.List;
 

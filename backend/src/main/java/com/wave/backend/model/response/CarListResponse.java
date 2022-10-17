@@ -1,6 +1,6 @@
 package com.wave.backend.model.response;
 
-import com.wave.backend.model.CartItem;
+import com.wave.backend.entity.CartItem;
 import lombok.Data;
 
 import java.util.List;

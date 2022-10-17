@@ -1,20 +1,19 @@
 package com.wave.backend.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.dreamyoung.mprelation.AutoMapper;
 import com.wave.backend.constant.CreateOrderItemStatus;
-import com.wave.backend.mapper.BookMapper;
-import com.wave.backend.mapper.OrderMapper;
-import com.wave.backend.model.Book;
-import com.wave.backend.model.CartItem;
-import com.wave.backend.model.Order;
-import com.wave.backend.model.OrderItem;
+import com.wave.backend.dao.BookDao;
+import com.wave.backend.dao.OrderDao;
+import com.wave.backend.dao.OrderItemDao;
+import com.wave.backend.entity.Book;
+import com.wave.backend.entity.CartItem;
+import com.wave.backend.entity.OrderItem;
 import  com.wave.backend.mapper.OrderitemMapper;
 import com.wave.backend.model.response.CreateOrderItemResponse;
 import com.wave.backend.service.OrderItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -30,30 +29,26 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderitemMapper, OrderItem
 implements OrderItemService {
 
     @Resource
-    private BookMapper bookMapper;
+    private OrderDao orderDao;
     @Resource
-    private OrderMapper orderMapper;
+    private OrderItemDao orderItemDao;
     @Resource
-    private OrderitemMapper orderitemMapper;
-    @Resource
-    private AutoMapper autoMapper;
+    private BookDao bookDao;
 
     @Override
+    @Transactional
     public CreateOrderItemResponse createOrderItem(List<CartItem> bookInCarList, Integer orderId) {
         CreateOrderItemResponse createOrderItemResponse = new CreateOrderItemResponse();
-        QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
-        orderQueryWrapper.eq("id",orderId);
-        // 判断order Id
-        if(orderMapper.selectCount(orderQueryWrapper) == 0){
+        if( orderDao.getById(orderId) == null){
             createOrderItemResponse.setStatus(CreateOrderItemStatus.WRONG_ORDER_ID);
             return createOrderItemResponse;
         }
-        Order order = orderMapper.selectById(orderId);
+
         System.out.println("订单列表如下:");
         // 遍历购物车，创建订单
         for (CartItem cartItem : bookInCarList) {
             Book book;
-            if ((book = bookMapper.selectById(cartItem.getBookId())) == null) {
+            if ((book = bookDao.findById(cartItem.getBookId()) ) == null) {
                 createOrderItemResponse.setStatus(CreateOrderItemStatus.WRONG_ORDER_ID);
                 return createOrderItemResponse;
             }
@@ -61,18 +56,18 @@ implements OrderItemService {
             orderItem.setOrderId(orderId);
             orderItem.setBookId(cartItem.getBookId());
             orderItem.setPrice(book.getPrice());
-            Book bookInRepo = autoMapper.mapperEntity(cartItem).getBook();
+
             // 判断库存
-            if(cartItem.getNumber() > bookInRepo.getInventory()){
+            if(cartItem.getNumber() > book.getInventory()){
                 createOrderItemResponse.setStatus(CreateOrderItemStatus.WRONG_NUM);
                 return createOrderItemResponse;
             }
             //更新库存
-            bookInRepo.setInventory(bookInRepo.getInventory() - cartItem.getNumber());
-            bookMapper.updateById(bookInRepo);
+            book.setInventory(book.getInventory() - cartItem.getNumber());
+            bookDao.saveOne(book);
             orderItem.setNumber(cartItem.getNumber());
-            // 需要考虑更新order的金额吗
-            this.save(orderItem);
+
+            orderItemDao.saveOne(orderItem);
             System.out.println(orderItem);
         }
         createOrderItemResponse.setStatus(CreateOrderItemStatus.ORDERITEM_ALL_OK);

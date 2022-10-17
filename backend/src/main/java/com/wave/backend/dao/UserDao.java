@@ -1,7 +1,6 @@
 package com.wave.backend.dao;
 
-import com.wave.backend.model.User;
-import org.apache.ibatis.annotations.Mapper;
+import com.wave.backend.entity.User;
 
 import java.util.List;
 

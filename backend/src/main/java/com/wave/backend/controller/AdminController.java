@@ -1,9 +1,9 @@
 package com.wave.backend.controller;
 
 
-import com.wave.backend.model.Book;
-import com.wave.backend.model.Order;
-import com.wave.backend.model.User;
+import com.wave.backend.entity.Book;
+import com.wave.backend.entity.Order;
+import com.wave.backend.entity.User;
 import com.wave.backend.model.request.CreateOrderRequest;
 import com.wave.backend.service.AdminService;
 import com.wave.backend.service.OrderService;

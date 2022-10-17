@@ -3,8 +3,7 @@ package com.wave.backend.dao.daoImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wave.backend.dao.UserDao;
 import com.wave.backend.mapper.UserMapper;
-import com.wave.backend.model.User;
-import lombok.extern.apachecommons.CommonsLog;
+import com.wave.backend.entity.User;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
