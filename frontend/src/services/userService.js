@@ -1,9 +1,9 @@
-import config from 'config';
-import {postRequest} from "../utils/ajax";
-import {history} from '../utils/history';
+
 import {message} from 'antd';
 import axios from "axios";
 import cookie from "react-cookies";
+import {closeWebSocket, createWebSocket} from "../Websocket";
+import PubSub from "pubsub-js";
 
 export const loginUser = () => {
     return cookie.load('userId')
@@ -22,6 +22,7 @@ export const logout = async () => {
             if (response.data != null) {
                 cookie.remove('userId')
                 window.location.href = '/login'
+                closeWebSocket()
                 return response
             }
         },
@@ -92,16 +93,16 @@ export function login(userAccount, userPassword, history) {
         userPassword: userPassword
     }).then(
         response => {
-            // console.log("请求成功", response.data);
             if (response.data.status == 'USER_ALL_OK') {
                 message.info("登陆成功，祝您购物愉快")
-                // let { history } = this.props
+                let userId = cookie.load('userId')
+                let url="ws://localhost:8080/websocket/create-order/"+response.data.id;//服务端连接的url
+                createWebSocket(url)
+                console.log("websocket connection created")
+                // let messageSocket=null;
+                // messageSocket = PubSub.subscribe('message','getMsg')
                 saveIdCookie(response.data.id)
-                flag = true
-                console.log(flag)
                 history.push({pathname: '/default'})
-                // window.location.href = '/default'
-                // history.push({ pathname: '/default' })
             } else if ("USER_NOT_EXIST" == response.data.status) {
                 message.error("登录失败：用户不存在或密码错误")
             } else if ("USER_BEEN_BANNED" == response.data.status) {

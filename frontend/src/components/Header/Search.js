@@ -13,7 +13,11 @@ class Search extends Component {
         super(props);
         // this.state  = {keyValue:"未输入"}
         this.handleSearch = this.handleSearch.bind(this)
+        this.onClickGotoCart = this.onClickGotoCart.bind(this)
     }
+
+    onClickGotoCart() {
+        history.push({ pathname: '/car' })    }
 
     handleSearch(){
         const keyword = this.keyWordElement.value
@@ -78,10 +82,15 @@ class Search extends Component {
 
                     <div className="searchIContentBag r">
                         <div className="searchIContentBag01 r">
-                            <a href="/car">
+                            {/*<a onClick={this.onClickGotoCart}>*/}
+                            {/*    <em className="bagIcon"></em>*/}
+                            {/*    购物车*/}
+                            {/*</a>*/}
+
+                            <Link to={"/car"}>
                                 <em className="bagIcon"></em>
                                 购物车
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

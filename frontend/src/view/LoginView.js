@@ -118,15 +118,7 @@ class LoginView extends React.Component {
                                     还没有账号？
                                     <Link to="/register" className="red">免费注册</Link>
                                 </p>
-                                {/* <div className="rightArraw r"></div> */}
-                                {/* <p className="r">
-                                  
-                                </p> */}
                             </div>
-
-                            {/* <div className="freeRegister l">
-                           
-                            </div> */}
                         </div>
                     </div>
                 </div>

@@ -67,13 +67,9 @@ implements OrderService{
         Order order = new Order();
         order.setUserId(user.getId());
 
-
         // 调用的第一个 Transaction 函数
         orderDao.saveOne(order);
         Integer orderId = order.getId();
-
-        createOrderResponse.setStatus(CreateOrderStatus.ORDER_ALL_OK);
-        createOrderResponse.setId(orderId);
 
         List<CartItem> bookInCarList = cartService.getCarByUserId(userId).getCartItems();
         List<OrderItem> orderItems = new ArrayList<>();
@@ -111,6 +107,9 @@ implements OrderService{
             e.printStackTrace();
         }
 
+        createOrderResponse.setStatus(CreateOrderStatus.ORDER_ALL_OK);
+        createOrderResponse.setId(orderId);
+        createOrderResponse.setUserId(userId);
 
         log.info("created order successfully");
         //清空购物车

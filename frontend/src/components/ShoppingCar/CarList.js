@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import BookInCar from "./BookInCar";
 import {getCar} from "../../services/shoppingCarService";
-import Pubsub from "pubsub-js";
+import PubSub from "pubsub-js";
 
 class CarList extends Component {
     constructor(props) {
@@ -23,7 +23,7 @@ class CarList extends Component {
 
 
     componentDidMount(){
-        Pubsub.subscribe('delCartItem',(_,stateObj)=>{
+        PubSub.subscribe('delCartItem',(_,stateObj)=>{
             console.log('收到书本数据!',stateObj);
             this.setState(stateObj)
         })

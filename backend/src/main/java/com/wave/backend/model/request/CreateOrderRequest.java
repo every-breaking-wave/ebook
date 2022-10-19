@@ -1,5 +1,6 @@
 package com.wave.backend.model.request;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;

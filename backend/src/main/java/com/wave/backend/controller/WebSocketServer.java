@@ -1,5 +1,6 @@
 package com.wave.backend.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -9,13 +10,14 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@ServerEndpoint("/websocket/transfer/{userId}")
+@ServerEndpoint("/websocket/create-order/{userId}")
 @Component
+@Slf4j
 public class WebSocketServer {
 
     public WebSocketServer() {
         //每当有一个连接，都会执行一次构造方法
-        System.out.println("新的连接。。。");
+        System.out.println("创建新的连接");
     }
 
     private static final AtomicInteger COUNT = new AtomicInteger();
@@ -34,9 +36,10 @@ public class WebSocketServer {
         }
     }
 
-    public void sendMessageToUser(String user, String message) {
-        System.out.println(user);
-        Session toSession = SESSIONS.get(user);
+    public void sendMessageToUser(String userId, String message) {
+        System.out.println(userId);
+        Session toSession = SESSIONS.get(userId);
+        log.info("send message "+ message);
         sendMessage(toSession, message);
         System.out.println(message);
     }

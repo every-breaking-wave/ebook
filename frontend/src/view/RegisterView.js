@@ -2,14 +2,8 @@ import React from 'react';
 import { Input, Form, Button, message } from 'antd';
 // import WrappedLoginForm from '../components/LoginForm';
 import { withRouter, Link, useNavigate } from "react-router-dom";
-import { history } from '../utils/history';
 import '../css/login.css'
 import '../css/base.css'
-import axios from 'axios';
-
-
-// import { Input, Space } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import {register} from "../services/userService";
 
 
@@ -40,28 +34,11 @@ class LoginView extends React.Component {
 
 
     handleRegister = () => {
-
         const userAccount = this.state.userAccount
         const userPassword = this.state.userPassword
         const repeatPassword = this.state.repeatPassword
         const email = this.state.email
         register(userAccount, userPassword, repeatPassword, email)
-
-        // axios.post(`/api/user/register`, {
-        //     userAccount: userAccount,
-        //     userPassword: userPassword
-        // }).then(
-        //     response => {
-        //         console.log("请求成功", response.data);
-        //         if (response.data.status == 'USER_ALL_OK') {
-        //             message.info("注册成功，祝您购物愉快")
-        //             let { history } = this.props
-        //             history.push({ pathname: '/login' })
-        //         }
-        //         else message.error("登录失败：用户不存在或密码错误")
-        //     },
-        //     error => { console.log("请求失败", error); }
-        // )
     }
 
 
@@ -170,32 +147,24 @@ class LoginView extends React.Component {
                                     </Form>
                                 </div>
                             </div>
-                            
+
                             <Button
                                 type="primary"
                                 htmlType="submit"
                                 style={{ width: "80%", marginLeft: "10%" ,marginTop:40}}
                                 onClick={this.handleRegister}
-                            // loading={loading[0]}
                             >
                                 立刻注册
                             </Button>
-                       
-    
+
+
                             <div className="forgetpass l">
                                 <p  style={{marginLeft:170}}>
                                     已有账号？
                                     <Link to="/login" className="red">马上登录</Link>
                                 </p>
-                                {/* <div className="rightArraw r"></div> */}
-                                {/* <p className="r">
-                                  
-                                </p> */}
                             </div>
 
-                            {/* <div className="freeRegister l">
-                           
-                            </div> */}
                         </div>
                     </div>
                 </div>

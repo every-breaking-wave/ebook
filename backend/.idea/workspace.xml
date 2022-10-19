@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="480f5695-7cbd-41d8-a010-76f10431bab4" name="Changes" comment="Feature: Add WebSocket for create Order; modify .ignore">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/config/KafkaTemplateConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/model/KafkaMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/utils/InfoMessageEncoder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/utils/MessageDecoder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/utils/UserDefineSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/src/Websocket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wave/backend/controller/OrderListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/controller/OrderListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wave/backend/controller/WebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/controller/WebSocketServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wave/backend/model/request/CreateOrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/model/request/CreateOrderRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wave/backend/model/response/CreateOrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/model/response/CreateOrderResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wave/backend/service/impl/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wave/backend/service/impl/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Header/Search.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Header/Search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/ShoppingCar/CarList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/ShoppingCar/CarList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/services/userService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/view/HomeView.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/view/HomeView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/view/LoginView.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/view/LoginView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/view/RegisterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/view/RegisterView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/view/UserView.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/view/UserView.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectId" id="2FFSRXzBsMrYq1J9zQUw1ptPIa4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/Resoures/On_Going_Projects/Ebook/ebook/backend/pom.xml&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;b43fdd98b1fd705ae4c3a10cf25aad8a&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;hive&quot;,
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.wave.backend.dao.daoImpl" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.wave.backend.utils" />
+      <recent name="com.wave.backend.config" />
+      <recent name="com.wave.backend.controller" />
+      <recent name="com.wave.backend.service.impl" />
+      <recent name="com.wave.backend.service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.BackendApplication">
+    <configuration name="backend [install]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="install" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="BackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wave.backend.BackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Maven.backend [install]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="480f5695-7cbd-41d8-a010-76f10431bab4" name="Changes" comment="" />
+      <created>1664086330754</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1664086330754</updated>
+      <workItem from="1664086332126" duration="12140000" />
+      <workItem from="1665116306756" duration="1109000" />
+      <workItem from="1665117674608" duration="1729000" />
+      <workItem from="1665121190425" duration="3844000" />
+      <workItem from="1665221491437" duration="3295000" />
+      <workItem from="1665231452660" duration="885000" />
+      <workItem from="1665308333120" duration="714000" />
+      <workItem from="1665990846316" duration="2034000" />
+      <workItem from="1665993712142" duration="936000" />
+      <workItem from="1665994668187" duration="38000" />
+      <workItem from="1665994715477" duration="361000" />
+      <workItem from="1665995096840" duration="363000" />
+      <workItem from="1665995942962" duration="19270000" />
+      <workItem from="1666020774770" duration="1474000" />
+    </task>
+    <task id="LOCAL-00001" summary="Feature: Add transaction managerment for Create Order; Add Kafka message queue for Create Order">
+      <created>1665993021053</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665993021053</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Feature: Add transaction managerment for Create Order; Add Kafka message queue for Create Order">
+      <created>1665993793510</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1665993793510</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Feature: Add WebSocket for create Order; modify .ignore">
+      <created>1665994233271</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1665994233271</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Feature: Add transaction managerment for Create Order; Add Kafka message queue for Create Order" />
+    <MESSAGE value="Feature: Add WebSocket for create Order; modify .ignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feature: Add WebSocket for create Order; modify .ignore" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wave/backend/service/impl/OrderServiceImpl.java</url>
+          <line>114</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

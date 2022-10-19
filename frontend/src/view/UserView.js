@@ -30,6 +30,8 @@ export default class UserManageView extends Component {
             },
         )
 
+        
+
         Pubsub.subscribe('searchOrder',(_,stateObj)=>{
             console.log('收到订单数据!',stateObj);
             this.setState(stateObj)

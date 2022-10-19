@@ -7,8 +7,10 @@ import '../css/list.css'
 import '../css/base.css'
 import '../css/home.css'
 import axios from "axios";
-import Pubsub from "pubsub-js";
+import PubSub from "pubsub-js";
 import {history} from "../utils/history";
+import {createWebSocket, websocket} from "../Websocket";
+import cookie from "react-cookies";
 
 
 class HomeView extends React.Component {
@@ -27,12 +29,12 @@ class HomeView extends React.Component {
                 response => {
                     console.log("请求成功", response.data);
                     if (response.data.bookList != null) {
-                        Pubsub.publish('searchBook', {isLoading: false, bookList: response.data.bookList})
+                        PubSub.publish('searchBook', {isLoading: false, bookList: response.data.bookList})
                         history.push({pathname: '/default'})
                     }
                 },
                 error => {
-                    Pubsub.publish('searchBook', {err: error.message})
+                    PubSub.publish('searchBook', {err: error.message})
                 }
             )
         } else {
@@ -40,16 +42,15 @@ class HomeView extends React.Component {
                 response => {
                     console.log("请求成功", response.data);
                     if (response.data.bookList != null) {
-                        Pubsub.publish('searchBook', {isLoading: false, bookList: response.data.bookList})
+                        PubSub.publish('searchBook', {isLoading: false, bookList: response.data.bookList})
                         history.push(`/${keyValue}`)
                     }
                 },
                 error => {
-                    Pubsub.publish('searchBook', {err: error.message})
+                    PubSub.publish('searchBook', {err: error.message})
                 }
             )
         }
-
     }
 
     render() {
